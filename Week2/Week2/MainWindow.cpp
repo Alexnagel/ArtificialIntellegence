@@ -8,13 +8,19 @@
 
 #include "MainWindow.h"
 #include "MainController.h"
+#include "Cow.h"
+#include "Chicken.h"
 
-MainWindow::MainWindow(MainController* p_controller, QWidget *parent)
+MainWindow::MainWindow(QWidget *parent)
+{
+    
+}
+void MainWindow::setController(MainController* p_controller)
 {
     controller = p_controller;
 }
 
-void MainWindow::setGraph(Graph p_graph)
+void MainWindow::setGraph(std::shared_ptr<Graph> p_graph)
 {
     graph = p_graph;
 }
@@ -38,24 +44,17 @@ void MainWindow::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setBrush(Qt::darkGreen);
     
-    for (std::shared_ptr<Vertex> vertex : graph.getVertices())
+    for (std::vector<std::shared_ptr<Vertex>> xgrid : *controller->getVertices())
     {
-        painter.drawEllipse(vertex->getXpos() - 25, vertex->getYpos() - 25, 50, 50);
-        painter.setPen(Qt::black);
-        painter.drawText(vertex->getXpos(), vertex->getYpos() + 40, QString::fromStdString(std::to_string(vertex->getId())));
-        
-        for (std::shared_ptr<Edge> edge : vertex->getEdges())
+        for (std::shared_ptr<Vertex> vertex : xgrid)
         {
-            painter.setPen(QPen(Qt::blue, 2, Qt::SolidLine));
-            painter.drawLine(edge->getOrigin()->getXpos(), edge->getOrigin()->getYpos(),
-                             edge->getDestination()->getXpos(), edge->getDestination()->getYpos());
-            
-            int halfwayx = (edge->getOrigin()->getXpos() + edge->getDestination()->getXpos()) / 2;
-            int halfwayy = (edge->getOrigin()->getYpos() + edge->getDestination()->getYpos()) / 2;
-            painter.setPen(Qt::black);
-            painter.drawText(halfwayx, halfwayy, QString::fromStdString(std::to_string(edge->getWeight())));
+            if (vertex->isWall())
+            {
+                painter.setBrush(Qt::darkBlue);
+            }
+            painter.drawRect(vertex->getXpos() - 25, vertex->getYpos() - 25, 50, 50);
+            painter.setBrush(Qt::darkGreen);
         }
-        painter.setPen(Qt::darkGreen);
     }
     
     std::shared_ptr<Cow> s_cow = cow.lock();
@@ -66,10 +65,25 @@ void MainWindow::paintEvent(QPaintEvent *event)
     cow_img = cow_img.scaled(45, 45, Qt::KeepAspectRatio);
     chicken_img = chicken_img.scaled(45, 45, Qt::KeepAspectRatio);
     
-    painter.drawImage(s_cow->getPosition()->getXpos() - (cow_img.width() / 2),
-                      s_cow->getPosition()->getYpos() - (cow_img.height() / 2), cow_img);
-    painter.drawImage(s_chicken->getPosition()->getXpos() - (chicken_img.width() / 2),
-                      s_chicken->getPosition()->getYpos() - (chicken_img.height() / 2), chicken_img);
+    painter.drawImage(s_cow->getPosition()->getXpos() - 20,
+                      s_cow->getPosition()->getYpos() - 25, cow_img);
+    painter.drawImage(s_chicken->getPosition()->getXpos() - 20,
+                      s_chicken->getPosition()->getYpos() - 25, chicken_img);
+    
+    painter.setPen(Qt::white);
+    QString stateText;
+    switch (s_cow->getState()) {
+        case StateEnum::CowChasing:
+            stateText = "Cow is chasing the chicken";
+            break;
+        case StateEnum::CowWander:
+            stateText = "Cow is wandering in the field";
+            break;
+        default:
+            stateText = "No idea";
+            break;
+    }
+    painter.drawText(20, this->height() - 20, stateText);
 }
 
 MainWindow::~MainWindow()

@@ -18,6 +18,7 @@ public:
     virtual ~Utils();
     
     static int randomNumber(int max);
+    static int randomNumber(int min, int max);
     
 private:
     static int seed;

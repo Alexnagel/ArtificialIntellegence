@@ -1,6 +1,6 @@
 //
 //  Controller.h
-//  Week1
+//  Week2
 //
 //  Created by Alex Nagelkerke on 29-11-14.
 //  Copyright (c) 2014 Alex Nagelkerke. All rights reserved.
@@ -16,19 +16,27 @@
 #include "MainWindow.h"
 #include "Graph.h"
 
+class Cow;
+class Chicken;
 class MainController : QObject {
     Q_OBJECT
     
+    typedef std::vector<std::vector<std::shared_ptr<Vertex>>> verticeVector;
 public:
     MainController();
     virtual ~MainController();
     
     void move();
+    std::shared_ptr<verticeVector> getVertices();
+    void run();
 private:
+    bool isRunning;
     MainWindow* mainWindow;
-    Graph graph;
+    std::shared_ptr<Graph> graph;
+    int width,
+    height;
     
-    std::vector<std::shared_ptr<Vertex>> vertices;
+    std::shared_ptr<verticeVector> vertices;
     std::shared_ptr<Cow> cow;
     std::shared_ptr<Chicken> chicken;
     

@@ -9,24 +9,28 @@
 #ifndef __Week1__Cow__
 #define __Week1__Cow__
 
-#include <memory>
-#include <QString>
 #include <QCoreApplication>
 
-#include "Vertex.h"
+#include "Unit.h"
+#include "CowChase.h"
+#include "CowWandering.h"
+#include "Graph.h"
 
-class Cow {
+class Cow : public Unit, public std::enable_shared_from_this<Unit>{
 public:
-    Cow();
+    Cow(std::shared_ptr<Graph> graph);
+    Cow(const Cow& rvalue);
     virtual ~Cow();
     
-    void setPosition(std::shared_ptr<Vertex> vertex);
+    void move(std::shared_ptr<Vertex> vertex);
+    void move();
     std::shared_ptr<Vertex> getPosition();
     QString getImageURI();
     
+    void changeState(StateEnum changeToState);
+    StateEnum getState();
 private:
-    QString imageURI;
-    std::weak_ptr<Vertex> position;
+    std::shared_ptr<Graph> graph;
 };
 
 #endif /* defined(__Week1__Cow__) */

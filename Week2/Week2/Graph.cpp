@@ -7,28 +7,33 @@
 //
 
 #include "Graph.h"
+#include "Cow.h"
 
 Graph::Graph()
 {
     
 }
 
-std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, int _id)
+Graph::Graph(const Graph& rvalue): chicken(rvalue.chicken), vertices(rvalue.vertices), cameFrom(rvalue.cameFrom)
 {
-    std::shared_ptr<Vertex> vertex = std::make_shared<Vertex>(xpos, ypos, _id);
-    vertices.push_back(vertex);
+    
+}
+
+std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, bool isWall)
+{
+    std::shared_ptr<Vertex> vertex = std::make_shared<Vertex>(xpos, ypos, isWall);
     return vertex;
 }
 
 void Graph::addEdge(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to)
 {
-    int weight = Utils::randomNumber(100);
+    int weight = 2;
     from->addEdge(to, weight);
 }
 
 void Graph::addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to)
 {
-    int weight = Utils::randomNumber(100);
+    int weight = 2;
     from->addEdges(to, weight);
 }
 
@@ -37,9 +42,48 @@ void Graph::addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to, i
     from->addEdges(to, weight);
 }
 
-std::vector<std::shared_ptr<Vertex>> Graph::getVertices()
+void Graph::setVertices(std::shared_ptr<std::vector<std::vector<std::shared_ptr<Vertex>>>> p_vertices)
 {
-    return vertices;
+    vertices = p_vertices;
+}
+
+std::vector<std::vector<std::shared_ptr<Vertex>>> Graph::getVertices()
+{
+    return *vertices;
+}
+
+int Graph::getWidth()
+{
+    return vertices->at(0).size();
+}
+
+int Graph::getHeight()
+{
+    return vertices->size();
+}
+
+void Graph::setUnits(std::shared_ptr<Chicken> p_chicken)
+{
+    chicken = p_chicken;
+}
+
+std::vector<std::shared_ptr<Vertex>> Graph::getRouteChicken(std::shared_ptr<Vertex> start)
+{
+    return getRoute(start, chicken->getPosition());
+}
+
+std::vector<std::shared_ptr<Vertex>> Graph::getRouteRandom(std::shared_ptr<Vertex> start)
+{
+    std::shared_ptr<Vertex> end;
+    do{
+        int x = Utils::randomNumber(getWidth() - 1);
+        int y = Utils::randomNumber(getHeight() - 1);
+        
+        end = vertices->at(y).at(x);
+    }
+    while (end->isWall());
+    
+    return getRoute(start, end);
 }
 
 std::vector<std::shared_ptr<Vertex>> Graph::getRoute(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)
@@ -67,7 +111,7 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRoute(std::shared_ptr<Vertex> sta
         std::vector<std::shared_ptr<Edge>> edges = currentNode->getEdges();
         for (std::shared_ptr<Edge> edge : edges)
         {
-            if (edge->getDestination() != currentNode)
+            if (edge->getDestination() != currentNode && !edge->getDestination()->isWall())
                 neighbours[edge->getDestination()] = edge->getWeight();
         }
         

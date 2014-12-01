@@ -14,24 +14,35 @@
 #include "Vertex.h"
 #include "Edge.h"
 #include "Utils.h"
-#include "Cow.h"
-#include "Chicken.h"
 #include "PriotityQueue.h"
+#include "Chicken.h"
+
+class Cow;
 
 class Graph{
 public:
     Graph();
+    Graph(const Graph& rvalue);
     
-    std::shared_ptr<Vertex> addVertex(int xpos, int ypos, int _id);
+    std::shared_ptr<Vertex> addVertex(int xpos, int ypos, bool isWall);
     void addEdge(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to);
     void addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to);
     void addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to, int weight);
-    std::vector<std::shared_ptr<Vertex>> getVertices();
+    std::vector<std::vector<std::shared_ptr<Vertex>>> getVertices();
+    void setVertices(std::shared_ptr<std::vector<std::vector<std::shared_ptr<Vertex>>>> vertices);
+    
+    int getWidth();
+    int getHeight();
+    
+    void setUnits(std::shared_ptr<Chicken> chicken);
     
     std::vector<std::shared_ptr<Vertex>> getRoute(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end);
+    std::vector<std::shared_ptr<Vertex>> getRouteRandom(std::shared_ptr<Vertex> start);
+    std::vector<std::shared_ptr<Vertex>> getRouteChicken(std::shared_ptr<Vertex> start);
     
 private:
-    std::vector<std::shared_ptr<Vertex>> vertices;
+    std::shared_ptr<Chicken> chicken;
+    std::shared_ptr<std::vector<std::vector<std::shared_ptr<Vertex>>>> vertices;
     std::vector<std::shared_ptr<Vertex>> closedList;
     std::map<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>> cameFrom;
     

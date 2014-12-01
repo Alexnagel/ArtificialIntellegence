@@ -8,23 +8,103 @@
 
 /* Begin PBXBuildFile section */
 		FA5F404F1A2B918800698DF0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F404E1A2B918800698DF0 /* main.cpp */; };
+		FA5F406A1A2B91BA00698DF0 /* Chicken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40551A2B91BA00698DF0 /* Chicken.cpp */; };
+		FA5F406B1A2B91BA00698DF0 /* Cow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40571A2B91BA00698DF0 /* Cow.cpp */; };
+		FA5F406C1A2B91BA00698DF0 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40591A2B91BA00698DF0 /* Edge.cpp */; };
+		FA5F406D1A2B91BA00698DF0 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F405B1A2B91BA00698DF0 /* Graph.cpp */; };
+		FA5F40701A2B91BA00698DF0 /* MainController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F405F1A2B91BA00698DF0 /* MainController.cpp */; };
+		FA5F40721A2B91BA00698DF0 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40621A2B91BA00698DF0 /* MainWindow.cpp */; };
+		FA5F40731A2B91BA00698DF0 /* PriotityQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40641A2B91BA00698DF0 /* PriotityQueue.cpp */; };
+		FA5F40741A2B91BA00698DF0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40661A2B91BA00698DF0 /* Utils.cpp */; };
+		FA5F40751A2B91BA00698DF0 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40681A2B91BA00698DF0 /* Vertex.cpp */; };
+		FA5F407A1A2B980D00698DF0 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5F40791A2B980D00698DF0 /* QtCore.framework */; };
+		FA5F407D1A2B982B00698DF0 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5F407B1A2B982B00698DF0 /* QtGui.framework */; };
+		FA5F407E1A2B982B00698DF0 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5F407C1A2B982B00698DF0 /* QtWidgets.framework */; };
+		FA5F40821A2B986300698DF0 /* chicken.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA5F40801A2B986300698DF0 /* chicken.png */; };
+		FA5F40831A2B986300698DF0 /* cow.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA5F40811A2B986300698DF0 /* cow.png */; };
+		FA5F40851A2B98BF00698DF0 /* MainWindow.h in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40631A2B91BA00698DF0 /* MainWindow.h */; };
+		FA5F40861A2B98BF00698DF0 /* MainController.h in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40601A2B91BA00698DF0 /* MainController.h */; };
+		FA5F408C1A2BA78F00698DF0 /* Wall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F408A1A2BA78F00698DF0 /* Wall.cpp */; };
+		FA5F408F1A2BB90400698DF0 /* Pill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F408D1A2BB90400698DF0 /* Pill.cpp */; };
+		FA5F40931A2BBB1600698DF0 /* CowWandering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40911A2BBB1600698DF0 /* CowWandering.cpp */; };
+		FA5F40961A2BBB1E00698DF0 /* CowChase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40941A2BBB1E00698DF0 /* CowChase.cpp */; };
+		FA5F40991A2BBB2700698DF0 /* ChickenWandering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40971A2BBB2700698DF0 /* ChickenWandering.cpp */; };
+		FA5F409C1A2BBB3100698DF0 /* ChickenRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F409A1A2BBB3100698DF0 /* ChickenRun.cpp */; };
+		FA5F409F1A2BBB7600698DF0 /* BaseState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F409D1A2BBB7600698DF0 /* BaseState.cpp */; };
+		FA5F40A21A2BC0CF00698DF0 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40A01A2BC0CF00698DF0 /* Unit.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		FA5F407F1A2B983100698DF0 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.h";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"${INPUT_FILE_DIR}/${INPUT_FILE_BASE}_moc.cpp",
+			);
+			script = "/Users/Alex/Qt/5.3/clang_64/bin/moc ${INPUT_FILE_PATH} -o ${INPUT_FILE_DIR}/${INPUT_FILE_BASE}_moc.cpp";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		FA5F40491A2B918800698DF0 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
 			files = (
+				FA5F40821A2B986300698DF0 /* chicken.png in CopyFiles */,
+				FA5F40831A2B986300698DF0 /* cow.png in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FA5F404B1A2B918800698DF0 /* Week2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Week2; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA5F404E1A2B918800698DF0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FA5F40551A2B91BA00698DF0 /* Chicken.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chicken.cpp; sourceTree = "<group>"; };
+		FA5F40561A2B91BA00698DF0 /* Chicken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chicken.h; sourceTree = "<group>"; };
+		FA5F40571A2B91BA00698DF0 /* Cow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cow.cpp; sourceTree = "<group>"; };
+		FA5F40581A2B91BA00698DF0 /* Cow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cow.h; sourceTree = "<group>"; };
+		FA5F40591A2B91BA00698DF0 /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Edge.cpp; sourceTree = "<group>"; };
+		FA5F405A1A2B91BA00698DF0 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
+		FA5F405B1A2B91BA00698DF0 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
+		FA5F405C1A2B91BA00698DF0 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		FA5F405F1A2B91BA00698DF0 /* MainController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainController.cpp; sourceTree = "<group>"; };
+		FA5F40601A2B91BA00698DF0 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
+		FA5F40621A2B91BA00698DF0 /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainWindow.cpp; sourceTree = "<group>"; };
+		FA5F40631A2B91BA00698DF0 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
+		FA5F40641A2B91BA00698DF0 /* PriotityQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PriotityQueue.cpp; sourceTree = "<group>"; };
+		FA5F40651A2B91BA00698DF0 /* PriotityQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriotityQueue.h; sourceTree = "<group>"; };
+		FA5F40661A2B91BA00698DF0 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		FA5F40671A2B91BA00698DF0 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		FA5F40681A2B91BA00698DF0 /* Vertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vertex.cpp; sourceTree = "<group>"; };
+		FA5F40691A2B91BA00698DF0 /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		FA5F40791A2B980D00698DF0 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = ../../../Qt/5.3/clang_64/lib/QtCore.framework; sourceTree = "<group>"; };
+		FA5F407B1A2B982B00698DF0 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = ../../../Qt/5.3/clang_64/lib/QtGui.framework; sourceTree = "<group>"; };
+		FA5F407C1A2B982B00698DF0 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../../Qt/5.3/clang_64/lib/QtWidgets.framework; sourceTree = "<group>"; };
+		FA5F40801A2B986300698DF0 /* chicken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chicken.png; path = Week2/chicken.png; sourceTree = "<group>"; };
+		FA5F40811A2B986300698DF0 /* cow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cow.png; path = Week2/cow.png; sourceTree = "<group>"; };
+		FA5F408A1A2BA78F00698DF0 /* Wall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wall.cpp; sourceTree = "<group>"; };
+		FA5F408B1A2BA78F00698DF0 /* Wall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wall.h; sourceTree = "<group>"; };
+		FA5F408D1A2BB90400698DF0 /* Pill.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pill.cpp; sourceTree = "<group>"; };
+		FA5F408E1A2BB90400698DF0 /* Pill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pill.h; sourceTree = "<group>"; };
+		FA5F40911A2BBB1600698DF0 /* CowWandering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CowWandering.cpp; sourceTree = "<group>"; };
+		FA5F40921A2BBB1600698DF0 /* CowWandering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CowWandering.h; sourceTree = "<group>"; };
+		FA5F40941A2BBB1E00698DF0 /* CowChase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CowChase.cpp; sourceTree = "<group>"; };
+		FA5F40951A2BBB1E00698DF0 /* CowChase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CowChase.h; sourceTree = "<group>"; };
+		FA5F40971A2BBB2700698DF0 /* ChickenWandering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChickenWandering.cpp; sourceTree = "<group>"; };
+		FA5F40981A2BBB2700698DF0 /* ChickenWandering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChickenWandering.h; sourceTree = "<group>"; };
+		FA5F409A1A2BBB3100698DF0 /* ChickenRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChickenRun.cpp; sourceTree = "<group>"; };
+		FA5F409B1A2BBB3100698DF0 /* ChickenRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChickenRun.h; sourceTree = "<group>"; };
+		FA5F409D1A2BBB7600698DF0 /* BaseState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseState.cpp; sourceTree = "<group>"; };
+		FA5F409E1A2BBB7600698DF0 /* BaseState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseState.h; sourceTree = "<group>"; };
+		FA5F40A01A2BC0CF00698DF0 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
+		FA5F40A11A2BC0CF00698DF0 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
+		FA5F40A31A2BC7EC00698DF0 /* StateEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateEnum.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +112,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA5F407D1A2B982B00698DF0 /* QtGui.framework in Frameworks */,
+				FA5F407E1A2B982B00698DF0 /* QtWidgets.framework in Frameworks */,
+				FA5F407A1A2B980D00698DF0 /* QtCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +124,10 @@
 		FA5F40421A2B918800698DF0 = {
 			isa = PBXGroup;
 			children = (
+				FA5F40841A2B988A00698DF0 /* Resources */,
+				FA5F407B1A2B982B00698DF0 /* QtGui.framework */,
+				FA5F407C1A2B982B00698DF0 /* QtWidgets.framework */,
+				FA5F40791A2B980D00698DF0 /* QtCore.framework */,
 				FA5F404D1A2B918800698DF0 /* Week2 */,
 				FA5F404C1A2B918800698DF0 /* Products */,
 			);
@@ -57,9 +144,93 @@
 		FA5F404D1A2B918800698DF0 /* Week2 */ = {
 			isa = PBXGroup;
 			children = (
-				FA5F404E1A2B918800698DF0 /* main.cpp */,
+				FA5F40771A2B91EB00698DF0 /* Model */,
+				FA5F40761A2B91DC00698DF0 /* View */,
+				FA5F40781A2B91FD00698DF0 /* Controller */,
+				FA5F40661A2B91BA00698DF0 /* Utils.cpp */,
+				FA5F40671A2B91BA00698DF0 /* Utils.h */,
 			);
 			path = Week2;
+			sourceTree = "<group>";
+		};
+		FA5F40761A2B91DC00698DF0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA5F40551A2B91BA00698DF0 /* Chicken.cpp */,
+				FA5F40561A2B91BA00698DF0 /* Chicken.h */,
+				FA5F40571A2B91BA00698DF0 /* Cow.cpp */,
+				FA5F40581A2B91BA00698DF0 /* Cow.h */,
+				FA5F40621A2B91BA00698DF0 /* MainWindow.cpp */,
+				FA5F40631A2B91BA00698DF0 /* MainWindow.h */,
+				FA5F408A1A2BA78F00698DF0 /* Wall.cpp */,
+				FA5F408B1A2BA78F00698DF0 /* Wall.h */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		FA5F40771A2B91EB00698DF0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA5F40901A2BBB0100698DF0 /* States */,
+				FA5F40891A2BA11700698DF0 /* Graph */,
+				FA5F40641A2B91BA00698DF0 /* PriotityQueue.cpp */,
+				FA5F40651A2B91BA00698DF0 /* PriotityQueue.h */,
+				FA5F408D1A2BB90400698DF0 /* Pill.cpp */,
+				FA5F408E1A2BB90400698DF0 /* Pill.h */,
+				FA5F40A01A2BC0CF00698DF0 /* Unit.cpp */,
+				FA5F40A11A2BC0CF00698DF0 /* Unit.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		FA5F40781A2B91FD00698DF0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FA5F405F1A2B91BA00698DF0 /* MainController.cpp */,
+				FA5F40601A2B91BA00698DF0 /* MainController.h */,
+				FA5F404E1A2B918800698DF0 /* main.cpp */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		FA5F40841A2B988A00698DF0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA5F40801A2B986300698DF0 /* chicken.png */,
+				FA5F40811A2B986300698DF0 /* cow.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FA5F40891A2BA11700698DF0 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				FA5F40591A2B91BA00698DF0 /* Edge.cpp */,
+				FA5F405A1A2B91BA00698DF0 /* Edge.h */,
+				FA5F405B1A2B91BA00698DF0 /* Graph.cpp */,
+				FA5F405C1A2B91BA00698DF0 /* Graph.h */,
+				FA5F40681A2B91BA00698DF0 /* Vertex.cpp */,
+				FA5F40691A2B91BA00698DF0 /* Vertex.h */,
+			);
+			name = Graph;
+			sourceTree = "<group>";
+		};
+		FA5F40901A2BBB0100698DF0 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				FA5F409D1A2BBB7600698DF0 /* BaseState.cpp */,
+				FA5F409E1A2BBB7600698DF0 /* BaseState.h */,
+				FA5F40911A2BBB1600698DF0 /* CowWandering.cpp */,
+				FA5F40921A2BBB1600698DF0 /* CowWandering.h */,
+				FA5F40941A2BBB1E00698DF0 /* CowChase.cpp */,
+				FA5F40951A2BBB1E00698DF0 /* CowChase.h */,
+				FA5F40971A2BBB2700698DF0 /* ChickenWandering.cpp */,
+				FA5F40981A2BBB2700698DF0 /* ChickenWandering.h */,
+				FA5F409A1A2BBB3100698DF0 /* ChickenRun.cpp */,
+				FA5F409B1A2BBB3100698DF0 /* ChickenRun.h */,
+				FA5F40A31A2BC7EC00698DF0 /* StateEnum.h */,
+			);
+			name = States;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,6 +245,7 @@
 				FA5F40491A2B918800698DF0 /* CopyFiles */,
 			);
 			buildRules = (
+				FA5F407F1A2B983100698DF0 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -118,7 +290,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA5F40851A2B98BF00698DF0 /* MainWindow.h in Sources */,
+				FA5F40861A2B98BF00698DF0 /* MainController.h in Sources */,
+				FA5F40931A2BBB1600698DF0 /* CowWandering.cpp in Sources */,
+				FA5F406B1A2B91BA00698DF0 /* Cow.cpp in Sources */,
+				FA5F408C1A2BA78F00698DF0 /* Wall.cpp in Sources */,
 				FA5F404F1A2B918800698DF0 /* main.cpp in Sources */,
+				FA5F40991A2BBB2700698DF0 /* ChickenWandering.cpp in Sources */,
+				FA5F40701A2B91BA00698DF0 /* MainController.cpp in Sources */,
+				FA5F40721A2B91BA00698DF0 /* MainWindow.cpp in Sources */,
+				FA5F40A21A2BC0CF00698DF0 /* Unit.cpp in Sources */,
+				FA5F40741A2B91BA00698DF0 /* Utils.cpp in Sources */,
+				FA5F408F1A2BB90400698DF0 /* Pill.cpp in Sources */,
+				FA5F40961A2BBB1E00698DF0 /* CowChase.cpp in Sources */,
+				FA5F406C1A2B91BA00698DF0 /* Edge.cpp in Sources */,
+				FA5F409F1A2BBB7600698DF0 /* BaseState.cpp in Sources */,
+				FA5F406A1A2B91BA00698DF0 /* Chicken.cpp in Sources */,
+				FA5F406D1A2B91BA00698DF0 /* Graph.cpp in Sources */,
+				FA5F40731A2B91BA00698DF0 /* PriotityQueue.cpp in Sources */,
+				FA5F40751A2B91BA00698DF0 /* Vertex.cpp in Sources */,
+				FA5F409C1A2BBB3100698DF0 /* ChickenRun.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +393,15 @@
 		FA5F40531A2B918800698DF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Users/Alex/Qt/5.3/clang_64/lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/Alex/Qt/5.3/clang_64/lib/QtWidgets.framework/Headers,
+					/Users/Alex/Qt/5.3/clang_64/lib/QtGui.framework/Headers,
+					/Users/Alex/Qt/5.3/clang_64/lib/QtCore.framework/Headers,
+				);
+				LIBRARY_SEARCH_PATHS = "/Users/Alex/Qt/5.3/clang_64/lib/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -209,6 +409,15 @@
 		FA5F40541A2B918800698DF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Users/Alex/Qt/5.3/clang_64/lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/Alex/Qt/5.3/clang_64/lib/QtWidgets.framework/Headers,
+					/Users/Alex/Qt/5.3/clang_64/lib/QtGui.framework/Headers,
+					/Users/Alex/Qt/5.3/clang_64/lib/QtCore.framework/Headers,
+				);
+				LIBRARY_SEARCH_PATHS = "/Users/Alex/Qt/5.3/clang_64/lib/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

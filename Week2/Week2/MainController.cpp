@@ -7,86 +7,131 @@
 //
 
 #include "MainController.h"
+#include "Cow.h"
+#include "Chicken.h"
 
 MainController::MainController()
 {
+    width = 880;
+    height = 800;
+    
+    graph = std::make_shared<Graph>();
     initGraph();
+    mainWindow = new MainWindow();
     
-    mainWindow = new MainWindow(this);
-    
+    mainWindow->setController(this);
     mainWindow->setGraph(graph);
     mainWindow->setUnits(cow, chicken);
     
-    mainWindow->resize(650, 350);
+    mainWindow->resize(width, height);
     mainWindow->show();
+    
+    run();
 }
 
-void MainController::move()
+void MainController::run()
 {
-    update();
-}
-
-void MainController::initGraph()
-{
-    std::shared_ptr<Vertex> vertex1 = graph.addVertex(50, 90, 1);
-    std::shared_ptr<Vertex> vertex2 = graph.addVertex(300, 100, 2);
-    std::shared_ptr<Vertex> vertex3 = graph.addVertex(150, 200, 3);
-    std::shared_ptr<Vertex> vertex4 = graph.addVertex(400, 300, 4);
-    std::shared_ptr<Vertex> vertex5 = graph.addVertex(600, 200, 5);
-    std::shared_ptr<Vertex> vertex6 = graph.addVertex(300, 20, 6);
-    vertices = std::vector<std::shared_ptr<Vertex>> {vertex1, vertex2, vertex3, vertex4, vertex5, vertex6};
+    double  dt  = 0.0,
+    current,
+    previous;
     
-    graph.addEdges(vertex1, vertex3, 51);
-    graph.addEdges(vertex2, vertex4, 100);
-    graph.addEdges(vertex3, vertex4, 50);
-    graph.addEdges(vertex4, vertex5, 78);
-    graph.addEdges(vertex5, vertex6, 89);
-    graph.addEdges(vertex1, vertex6, 4);
+    isRunning    = true;
     
-    cow = std::make_shared<Cow>();
-    chicken = std::make_shared<Chicken>();
-    cow->setPosition(vertex1);
-    chicken->setPosition(vertex4);
-    
-    graph.getRoute(vertex1, vertex5);
-}
-
-void MainController::moveChicken()
-{
-    int position;
-    do{
-        position = Utils::randomNumber(vertices.size() - 1);
-    }
-    while (vertices.at(position) == chicken->getPosition());
-    
-    chicken->setPosition(vertices.at(position));
-}
-
-void MainController::moveCow(std::vector<std::shared_ptr<Vertex>> route)
-{
-    for (std::shared_ptr<Vertex> vertex : route)
+    current         = ::clock();
+    while (isRunning)
     {
-        cow->setPosition(vertex);
+        previous    = current;
+        current     = ::clock();
+        dt          = current - previous;
         
-        repaint();
+        update();
         
         std::chrono::milliseconds dura(1000);
         std::this_thread::sleep_for(dura);
     }
 }
 
+void MainController::move()
+{
+    //update();
+}
+
+void MainController::initGraph()
+{
+    int gridx = width / 40;
+    int gridy = height / 40;
+    
+    vertices = std::make_shared<verticeVector>();
+    for (int y = 1; y < gridy; y++)
+    {
+        std::vector<std::shared_ptr<Vertex>> vrow;
+        for (int x = 1; x < gridx; x++)
+        {
+            bool isWall = false;
+            bool hasPill = false;
+            int random = Utils::randomNumber(100);
+            if (random < 20)
+                isWall = true;
+            if (random < 10)
+                hasPill = true;
+            
+            std::shared_ptr<Vertex> vertex = graph->addVertex(x * 40, y * 40, isWall);
+            vrow.push_back(vertex);
+            
+            if (x > 1)
+                graph->addEdges(vertex, vrow.at(x - 2));
+            if (y > 1)
+                graph->addEdges(vertex, vertices->at(y - 2).at(x - 1));
+        }
+        vertices->push_back(vrow);
+    }
+    graph->setVertices(vertices);
+    
+    chicken = std::shared_ptr<Chicken>(new Chicken());
+    cow = std::shared_ptr<Cow>(new Cow(graph));
+    
+    int cowx, cowy, chickx, chicky;
+    std::shared_ptr<Vertex> cowVertex;
+    std::shared_ptr<Vertex> chickenVertex;
+    
+    // Set the chicken location
+    do {
+        chickx = Utils::randomNumber(gridx - 2);
+        chicky = Utils::randomNumber(gridy - 1);
+        chickenVertex = vertices->at(chicky).at(chickx);
+    }
+    while (chickenVertex->isWall());
+    chicken->move(chickenVertex);
+    
+    // Set the chicken in the graph
+    graph->setUnits(chicken);
+    
+    // Set the cow location
+    do {
+        cowx = Utils::randomNumber(gridx - 2);
+        cowy = Utils::randomNumber(gridy - 1);
+        cowVertex = vertices->at(cowy).at(cowx);
+    }
+    while (cowVertex->isWall());
+    cow->move(cowVertex);
+}
+
 void MainController::update()
 {
-    std::vector<std::shared_ptr<Vertex>> route = graph.getRoute(cow->getPosition(), chicken->getPosition());
-    moveCow(route);
-    moveChicken();
+    cow->move();
     repaint();
 }
 
 void MainController::repaint()
 {
     mainWindow->update();
+    // Dirty but it works
     qApp->processEvents();
+}
+
+std::shared_ptr<std::vector<std::vector<std::shared_ptr<Vertex>>>> MainController::getVertices()
+{
+    return vertices;
 }
 
 MainController::~MainController()

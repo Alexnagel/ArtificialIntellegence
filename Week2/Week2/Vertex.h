@@ -12,29 +12,33 @@
 #include <vector>
 #include <memory>
 
+#include "Pill.h"
+
 class Edge;
 
 class Vertex : public std::enable_shared_from_this<Vertex>{
 public:
-    Vertex(int xpos, int ypos, int p_id);
+    Vertex(int xpos, int ypos, bool isWall, bool hasPill);
+    Vertex(int xpos, int ypos, bool isWall);
     Vertex(const Vertex& vertex);
     
     void addEdge(std::shared_ptr<Vertex> to, int weight);
     void addEdges(std::shared_ptr<Vertex> to, int weight);
-    bool isVisited();
-    void setVisited(bool isVisited);
+    std::vector<std::shared_ptr<Edge>> getEdges();
     
     int getXpos();
     int getYpos();
-    int getId();
-    std::vector<std::shared_ptr<Edge>> getEdges();
+    bool isWall();
+    bool hasPill();
+    void eatPill();
 private:
-    bool visited;
     std::vector<std::shared_ptr<Edge>> edges;
     
     int xpos;
     int ypos;
-    int _id;
+    bool wall;
+    Pill pill;
+    bool has_pill;
 };
 
 

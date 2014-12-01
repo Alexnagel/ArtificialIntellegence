@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F2EE04FA-4129-4A63-B8B3-C0B49BD45588</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Week2</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>01F2BA82CEF7A95F6096AEECFB342013BFB74296</key>
+		<string>github.com:Alexnagel/ArtificialIntellegence.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Week2/Week2.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>01F2BA82CEF7A95F6096AEECFB342013BFB74296</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:Alexnagel/ArtificialIntellegence.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>01F2BA82CEF7A95F6096AEECFB342013BFB74296</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>01F2BA82CEF7A95F6096AEECFB342013BFB74296</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ArtificialIntellegence</string>
+		</dict>
+	</array>
+</dict>
+</plist>

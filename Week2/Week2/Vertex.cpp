@@ -9,12 +9,17 @@
 #include "Vertex.h"
 #include "Edge.h"
 
-Vertex::Vertex(int p_xpos, int p_ypos, int p_id) :xpos(p_xpos), ypos(p_ypos), visited(false), _id(p_id)
+Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool hasPill) :xpos(p_xpos), ypos(p_ypos), wall(isWall)
 {
-    
+    if (hasPill)
+        pill = Pill();
 }
 
-Vertex::Vertex(const Vertex& vertex) :xpos(vertex.xpos), ypos(vertex.ypos), visited(vertex.visited), _id(vertex._id)
+Vertex::Vertex(int p_xpos, int p_ypos, bool isWall) :xpos(p_xpos), ypos(p_ypos), wall(isWall)
+{
+}
+
+Vertex::Vertex(const Vertex& vertex) :xpos(vertex.xpos), ypos(vertex.ypos), wall(vertex.wall), has_pill(vertex.has_pill)
 {
     
 }
@@ -31,16 +36,6 @@ void Vertex::addEdges(std::shared_ptr<Vertex> to, int weight)
     to->addEdge(shared_from_this(), weight);
 }
 
-bool Vertex::isVisited()
-{
-    return visited;
-}
-
-void Vertex::setVisited(bool isVisited)
-{
-    visited = isVisited;
-}
-
 int Vertex::getXpos()
 {
     return xpos;
@@ -51,9 +46,20 @@ int Vertex::getYpos()
     return ypos;
 }
 
-int Vertex::getId()
+bool Vertex::isWall()
 {
-    return _id;
+    return wall;
+}
+
+bool Vertex::hasPill()
+{
+    return has_pill;
+}
+
+void Vertex::eatPill()
+{
+    pill.isEaten();
+    has_pill = false;
 }
 
 std::vector<std::shared_ptr<Edge>> Vertex::getEdges()

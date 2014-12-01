@@ -11,11 +11,17 @@
 Chicken::Chicken()
 {
     imageURI = QCoreApplication::applicationDirPath() + "/chicken.png";
+    changeState(StateEnum::ChickenWander);
 }
 
-void Chicken::setPosition(std::shared_ptr<Vertex> vertex)
+void Chicken::move(std::shared_ptr<Vertex> vertex)
 {
     position = vertex;
+}
+
+void Chicken::move()
+{
+    state->move();
 }
 
 std::shared_ptr<Vertex> Chicken::getPosition()
@@ -26,6 +32,26 @@ std::shared_ptr<Vertex> Chicken::getPosition()
 QString Chicken::getImageURI()
 {
     return imageURI;
+}
+
+StateEnum Chicken::getState()
+{
+    return currentState;
+}
+
+void Chicken::changeState(StateEnum changeStateTo)
+{
+    switch (changeStateTo) {
+        case StateEnum::ChickenRunning:
+            state = new ChickenRun(std::shared_ptr<Chicken>(this));
+            currentState = StateEnum::ChickenRunning;
+            break;
+        case StateEnum::ChickenWander:
+            state = new ChickenWandering(std::shared_ptr<Chicken>(this));
+            currentState = StateEnum::ChickenWander;
+        default:
+            break;
+    }
 }
 
 Chicken::~Chicken()

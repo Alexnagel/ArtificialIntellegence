@@ -21,6 +21,11 @@ int Utils::randomNumber(int max)
     return std::uniform_int_distribution<int>(0, max)(rng);
 }
 
+int Utils::randomNumber(int min, int max)
+{
+    return std::uniform_int_distribution<int>(min, max)(rng);
+}
+
 Utils::~Utils()
 {
     

@@ -15,6 +15,7 @@
 #include <QObject>
 
 #include "Graph.h"
+#include "StateEnum.h"
 
 class MainController;
 
@@ -23,10 +24,11 @@ class MainWindow : public QWidget
  Q_OBJECT
     
 public:
-    MainWindow(MainController* controller, QWidget *parent = 0);
+    MainWindow(QWidget *parent = 0);
     virtual ~MainWindow();
     
-    void setGraph(Graph graph);
+    void setController(MainController* controller);
+    void setGraph(std::shared_ptr<Graph> graph);
     void setUnits(std::shared_ptr<Cow> cow, std::shared_ptr<Chicken> chicken);
     
 protected:
@@ -35,7 +37,7 @@ protected:
     
 private:
     MainController* controller;
-    Graph graph;
+    std::shared_ptr<Graph> graph;
     
     std::weak_ptr<Cow> cow;
     std::weak_ptr<Chicken> chicken;

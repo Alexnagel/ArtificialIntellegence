@@ -9,24 +9,24 @@
 #ifndef __Week1__Chicken__
 #define __Week1__Chicken__
 
-#include <memory>
-#include <QString>
 #include <QCoreApplication>
 
-#include "Vertex.h"
+#include "Unit.h"
+#include "ChickenWandering.h"
+#include "ChickenRun.h"
 
-class Chicken {
+class Chicken : public Unit, public std::enable_shared_from_this<Unit>{
 public:
     Chicken();
     virtual ~Chicken();
     
-    void setPosition(std::shared_ptr<Vertex> vertex);
+    void move(std::shared_ptr<Vertex> vertex);
+    void move();
     std::shared_ptr<Vertex> getPosition();
     QString getImageURI();
     
-private:
-    QString imageURI;
-    std::weak_ptr<Vertex> position;
+    void changeState(StateEnum state);
+    StateEnum getState();
 };
 
 #endif /* defined(__Week1__Chicken__) */
