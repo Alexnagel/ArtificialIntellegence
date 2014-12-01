@@ -18,7 +18,7 @@ CowChase::CowChase(std::shared_ptr<Unit> p_owner, std::shared_ptr<Graph> graph)
 
 void CowChase::move()
 {
-    if (!routedefined)
+    if (!routedefined || currentIndex >= route.size())
     {
         route = graph->getRouteChicken(owner->getPosition());
         routedefined = true;
@@ -32,4 +32,9 @@ void CowChase::checkState()
 {
     if (currentIndex == route.size() - 1)
         owner->changeState(StateEnum::CowWander);
+}
+
+std::vector<std::shared_ptr<Vertex>> CowChase::getRoute()
+{
+    return route;
 }

@@ -12,6 +12,8 @@
 #include <QObject>
 #include <QtWidgets>
 #include <thread>
+#include <cmath>
+#include <iostream>
 
 #include "MainWindow.h"
 #include "Graph.h"
@@ -29,20 +31,31 @@ public:
     void move();
     std::shared_ptr<verticeVector> getVertices();
     void run();
+    
+    void quit();
 private:
+    static const int BOX_SIZE = 8;
+    static const int BOX_AMOUNT = 5;
+    static const int TILE_SIZE = 40;
+    
+    int width;
+    int height;
+    int xGrid;
+    int yGrid;
+    
     bool isRunning;
     MainWindow* mainWindow;
     std::shared_ptr<Graph> graph;
-    int width,
-    height;
     
-    std::shared_ptr<verticeVector> vertices;
     std::shared_ptr<Cow> cow;
     std::shared_ptr<Chicken> chicken;
     
     void update();
     void repaint();
     void initGraph();
+    void initUnits();
+    
+    // move
     void moveChicken();
     void moveCow(std::vector<std::shared_ptr<Vertex>> route);
 };

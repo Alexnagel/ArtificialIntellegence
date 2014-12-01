@@ -10,11 +10,20 @@
 #include "MainController.h"
 #include "Cow.h"
 #include "Chicken.h"
+#include "Graph.h"
+#include "Vertex.h"
 
 MainWindow::MainWindow(QWidget *parent)
 {
     
 }
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    controller->quit();
+    event->accept();
+}
+
 void MainWindow::setController(MainController* p_controller)
 {
     controller = p_controller;
@@ -31,48 +40,108 @@ void MainWindow::setUnits(std::shared_ptr<Cow> p_cow, std::shared_ptr<Chicken> p
     chicken = p_chicken;
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *e)
+void MainWindow::paintEvent(QPaintEvent *event)
 {
-    if (e->key() == Qt::Key_Space)
-    {
-        controller->move();
-    }
+    drawMap();
+    drawSearch();
+    drawUnits();
+    drawStateText();
+    
 }
 
-void MainWindow::paintEvent(QPaintEvent *event)
+void MainWindow::drawMap()
 {
     QPainter painter(this);
     painter.setBrush(Qt::darkGreen);
+    painter.setPen(Qt::NoPen);
     
-    for (std::vector<std::shared_ptr<Vertex>> xgrid : *controller->getVertices())
+    for (std::vector<std::shared_ptr<Vertex>> xgrid : graph->getVertices())
     {
         for (std::shared_ptr<Vertex> vertex : xgrid)
         {
             if (vertex->isWall())
-            {
                 painter.setBrush(Qt::darkBlue);
-            }
-            painter.drawRect(vertex->getXpos() - 25, vertex->getYpos() - 25, 50, 50);
+            if (vertex->isDestination())
+                painter.setBrush(Qt::red);
+            
+            painter.drawRect(vertex->getXpos(), vertex->getYpos(), 8, 8);
+            
+            /*if (vertex->hasPill())
+            {
+                painter.setBrush(Qt::darkMagenta);
+                painter.drawEllipse(vertex->getXpos() - 4, vertex->getYpos(), 12, 8);
+            }*/
+
             painter.setBrush(Qt::darkGreen);
+            
+            /*for (std::shared_ptr<Edge> edge : vertex->getEdges())
+            {
+                painter.setPen(QPen(Qt::red, 2, Qt::SolidLine));
+                painter.drawLine(edge->getOrigin()->getXpos() + 4, edge->getOrigin()->getYpos() + 4,
+                                 edge->getDestination()->getXpos() + 4, edge->getDestination()->getYpos() + 4);
+            }*/
+            painter.setPen(Qt::NoPen);
         }
     }
+}
+
+void MainWindow::setPaths(std::map<std::shared_ptr<Vertex>, std::shared_ptr<Vertex> > p_paths)
+{
+    paths = p_paths;
+}
+
+void MainWindow::drawSearch()
+{
+    QPainter painter(this);
+    painter.setPen(QPen(Qt::red, 2, Qt::SolidLine));
+    for (std::pair<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>> pair : paths )
+    {
+        std::shared_ptr<Vertex> first, second;
+        first = pair.first;
+        second = pair.second;
+        painter.drawLine(first->getXpos() + 4, first->getYpos() + 4,
+                         second->getXpos() + 4, second->getYpos() + 4);
+    }
+}
+
+void MainWindow::drawUnits()
+{
+    QPainter painter(this);
     
     std::shared_ptr<Cow> s_cow = cow.lock();
     std::shared_ptr<Chicken> s_chicken = chicken.lock();
     QImage chicken_img(s_chicken->getImageURI());
     QImage cow_img(s_cow->getImageURI());
     
-    cow_img = cow_img.scaled(45, 45, Qt::KeepAspectRatio);
-    chicken_img = chicken_img.scaled(45, 45, Qt::KeepAspectRatio);
+    cow_img = cow_img.scaled(30, 30, Qt::KeepAspectRatio);
+    chicken_img = chicken_img.scaled(30, 30, Qt::KeepAspectRatio);
     
-    painter.drawImage(s_cow->getPosition()->getXpos() - 20,
-                      s_cow->getPosition()->getYpos() - 25, cow_img);
-    painter.drawImage(s_chicken->getPosition()->getXpos() - 20,
-                      s_chicken->getPosition()->getYpos() - 25, chicken_img);
+    painter.drawImage(s_cow->getPosition()->getXpos() - 15,
+                      s_cow->getPosition()->getYpos() - 15, cow_img);
+    painter.drawImage(s_chicken->getPosition()->getXpos() - 15,
+                      s_chicken->getPosition()->getYpos() - 15, chicken_img);
     
+    if (DRAW_COW_PATH)
+    {
+        painter.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+        std::vector<std::shared_ptr<Vertex>> route = s_cow->getRoute();
+        for (int i = 0; i < route.size(); i++)
+        {
+            if (i < route.size() - 1)
+                painter.drawLine(route[i]->getXpos() + 4, route[i]->getYpos() + 4,
+                             route[i + 1]->getXpos() + 4, route[i + 1]->getYpos() + 4);
+        }
+        painter.setPen(Qt::NoPen);
+    }
+}
+
+void MainWindow::drawStateText()
+{
+    QPainter painter(this);
     painter.setPen(Qt::white);
+    
     QString stateText;
-    switch (s_cow->getState()) {
+    switch (cow.lock()->getState()) {
         case StateEnum::CowChasing:
             stateText = "Cow is chasing the chicken";
             break;
@@ -86,7 +155,9 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.drawText(20, this->height() - 20, stateText);
 }
 
+
+
 MainWindow::~MainWindow()
 {
-    
+    delete controller;
 }

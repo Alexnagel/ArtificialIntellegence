@@ -29,6 +29,9 @@ public:
     
     void changeState(StateEnum changeToState);
     StateEnum getState();
+    
+    // DEBUG
+    std::vector<std::shared_ptr<Vertex>> getRoute();
 private:
     std::shared_ptr<Graph> graph;
 };

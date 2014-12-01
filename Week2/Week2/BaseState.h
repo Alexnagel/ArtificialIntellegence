@@ -21,9 +21,11 @@ class BaseState {
 public:
     virtual void move() = 0;
     virtual void checkState() = 0;
+    virtual std::vector<std::shared_ptr<Vertex>> getRoute() = 0;
     
 protected:
     std::shared_ptr<Unit> owner;
+    std::vector<std::shared_ptr<Vertex>> route;
 };
 
 #endif /* defined(__Week2__BaseState__) */

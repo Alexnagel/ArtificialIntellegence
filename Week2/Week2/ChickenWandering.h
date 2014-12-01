@@ -17,6 +17,7 @@ public:
     
     void move();
     void checkState();
+    std::vector<std::shared_ptr<Vertex>> getRoute();
 };
 
 #endif /* defined(__Week2__ChickenWandering__) */

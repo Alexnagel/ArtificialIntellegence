@@ -94,7 +94,11 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRoute(std::shared_ptr<Vertex> sta
 int Graph::calculateHeuristic(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)
 {
     // use absolute for when negative numbers occur
-    return abs(start->getXpos() - end->getXpos()) + abs(start->getYpos() - end->getYpos());
+    //return abs(start->getXpos() - end->getXpos()) + abs(start->getYpos() - end->getYpos());
+    //Euclidian heuristic
+    int xd = start->getXpos() - end->getXpos();
+    int yd = start->getYpos() - end->getYpos();
+    return static_cast<int>(sqrt(xd*xd+yd*yd));
 }
 
 std::vector<std::shared_ptr<Vertex>> Graph::createPath(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)

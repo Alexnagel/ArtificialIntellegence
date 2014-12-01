@@ -29,26 +29,31 @@ void MainController::move()
 void MainController::initGraph()
 {
     std::shared_ptr<Vertex> vertex1 = graph.addVertex(50, 90, 1);
-    std::shared_ptr<Vertex> vertex2 = graph.addVertex(300, 100, 2);
+    //std::shared_ptr<Vertex> vertex2 = graph.addVertex(300, 100, 2);
     std::shared_ptr<Vertex> vertex3 = graph.addVertex(150, 200, 3);
-    std::shared_ptr<Vertex> vertex4 = graph.addVertex(400, 300, 4);
-    std::shared_ptr<Vertex> vertex5 = graph.addVertex(600, 200, 5);
+    std::shared_ptr<Vertex> vertex4 = graph.addVertex(350, 220, 4);
+    std::shared_ptr<Vertex> vertex5 = graph.addVertex(430, 125, 5);
     std::shared_ptr<Vertex> vertex6 = graph.addVertex(300, 20, 6);
-    vertices = std::vector<std::shared_ptr<Vertex>> {vertex1, vertex2, vertex3, vertex4, vertex5, vertex6};
+    vertices = std::vector<std::shared_ptr<Vertex>> {vertex1, vertex3, vertex4, vertex5, vertex6};
     
-    graph.addEdges(vertex1, vertex3, 51);
+    /*graph.addEdges(vertex1, vertex3, 51);
     graph.addEdges(vertex2, vertex4, 100);
     graph.addEdges(vertex3, vertex4, 50);
     graph.addEdges(vertex4, vertex5, 78);
     graph.addEdges(vertex5, vertex6, 89);
-    graph.addEdges(vertex1, vertex6, 4);
+    graph.addEdges(vertex1, vertex6, 4);*/
+    
+    graph.addEdges(vertex1, vertex3, 500);
+    graph.addEdges(vertex3, vertex6, 500);
+    graph.addEdges(vertex4, vertex5, 500);
+    graph.addEdges(vertex4, vertex3, 500);
+    graph.addEdges(vertex5, vertex3, 500);
+    graph.addEdges(vertex1, vertex6, 500);
     
     cow = std::make_shared<Cow>();
     chicken = std::make_shared<Chicken>();
     cow->setPosition(vertex1);
     chicken->setPosition(vertex4);
-    
-    graph.getRoute(vertex1, vertex5);
 }
 
 void MainController::moveChicken()

@@ -13,11 +13,16 @@
 #include <QKeyEvent>
 #include <QMainWindow>
 #include <QObject>
+#include <QCloseEvent>
 
-#include "Graph.h"
+
 #include "StateEnum.h"
 
 class MainController;
+class Graph;
+class Cow;
+class Chicken;
+class Vertex;
 
 class MainWindow : public QWidget
 {
@@ -30,17 +35,28 @@ public:
     void setController(MainController* controller);
     void setGraph(std::shared_ptr<Graph> graph);
     void setUnits(std::shared_ptr<Cow> cow, std::shared_ptr<Chicken> chicken);
+    void closeEvent(QCloseEvent *event);
     
+    void drawSearch();
+    void setPaths(std::map<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>> paths);
+
 protected:
-    virtual void keyPressEvent(QKeyEvent* key);
-    virtual void paintEvent(QPaintEvent* event);
+    void paintEvent(QPaintEvent* event);
     
 private:
+    static const bool DRAW_COW_PATH = true;
+    
     MainController* controller;
     std::shared_ptr<Graph> graph;
+    std::map<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>> paths;
     
     std::weak_ptr<Cow> cow;
     std::weak_ptr<Chicken> chicken;
+    
+    // Draw functions
+    void drawStateText();
+    void drawUnits();
+    void drawMap();
 };
 
 #endif /* defined(__Week1__MainWindow__) */

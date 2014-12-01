@@ -9,9 +9,9 @@
 #include "Graph.h"
 #include "Cow.h"
 
-Graph::Graph()
+Graph::Graph(MainWindow* p_main)
 {
-    
+    main = p_main;
 }
 
 Graph::Graph(const Graph& rvalue): chicken(rvalue.chicken), vertices(rvalue.vertices), cameFrom(rvalue.cameFrom)
@@ -19,21 +19,21 @@ Graph::Graph(const Graph& rvalue): chicken(rvalue.chicken), vertices(rvalue.vert
     
 }
 
-std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, bool isWall)
+std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, bool isWall, bool hasPill)
 {
-    std::shared_ptr<Vertex> vertex = std::make_shared<Vertex>(xpos, ypos, isWall);
+    std::shared_ptr<Vertex> vertex = std::make_shared<Vertex>(xpos, ypos, isWall, hasPill);
     return vertex;
 }
 
 void Graph::addEdge(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to)
 {
-    int weight = 2;
+    int weight = 50;
     from->addEdge(to, weight);
 }
 
 void Graph::addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to)
 {
-    int weight = 2;
+    int weight = 50;
     from->addEdges(to, weight);
 }
 
@@ -79,22 +79,22 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRouteRandom(std::shared_ptr<Verte
         int x = Utils::randomNumber(getWidth() - 1);
         int y = Utils::randomNumber(getHeight() - 1);
         
-        end = vertices->at(y).at(x);
+        end = std::shared_ptr<Vertex>(vertices->at(y).at(x));
     }
     while (end->isWall());
-    
+    end->setDestination(true);
     return getRoute(start, end);
 }
 
 std::vector<std::shared_ptr<Vertex>> Graph::getRoute(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)
 {
-    cameFrom = std::map<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>>();
+    cameFrom = new std::map<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>>();
     std::map<std::shared_ptr<Vertex>, int> costSoFar;
     
     PriorityQueue queue;
     queue.put(start, 0);
     
-    cameFrom[start] = start;
+    cameFrom->insert(std::pair<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>>(start, start));
     costSoFar[start] = 0;
     
     while (!queue.empty())
@@ -102,34 +102,32 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRoute(std::shared_ptr<Vertex> sta
         std::shared_ptr<Vertex> currentNode = queue.get();
         
         if (currentNode == end)
+        {
             break;
-        
-        // init neighbours map containing the neighbours and their respective edge weights
-        std::map<std::shared_ptr<Vertex>, int> neighbours;
-        
-        // get the edges for this vertex
-        std::vector<std::shared_ptr<Edge>> edges = currentNode->getEdges();
-        for (std::shared_ptr<Edge> edge : edges)
-        {
-            if (edge->getDestination() != currentNode && !edge->getDestination()->isWall())
-                neighbours[edge->getDestination()] = edge->getWeight();
         }
-        
-        for (std::pair<std::shared_ptr<Vertex>,int> neighbour : neighbours)
+
+        for (std::shared_ptr<Edge> edge : currentNode->getEdges())
         {
-            int cost = costSoFar[currentNode] + neighbour.second;
+            int cost = costSoFar[currentNode] + edge->getWeight();
             // If it doesn't contain this neighbour or the cost for this step is less than the existing step
-            if (!costSoFar.count(neighbour.first) || cost < costSoFar[neighbour.first])
+            if (!costSoFar.count(edge->getDestination()) || cost < costSoFar[edge->getDestination()])
             {
-                costSoFar[neighbour.first] = cost;
+                costSoFar[edge->getDestination()] = cost;
                 
                 // calculate priority for in the queue
                 // add the total cost till this step with the heuristic
-                int priority = cost + calculateHeuristic(neighbour.first, end);
-                queue.put(neighbour.first, priority);
+                int priority = cost + calculateHeuristic(edge->getDestination(), end);
+                queue.put(edge->getDestination(), priority);
                 // Add to the path map
-                cameFrom[neighbour.first] = currentNode;
+                cameFrom->insert(std::pair<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>>(edge->getDestination(), currentNode));
             }
+        }
+        
+        if (DEBUG_PATH)
+        {
+            main->setPaths(*cameFrom);
+            main->repaint();
+            qApp->processEvents();
         }
     }
     return createPath(start, end);
@@ -137,8 +135,16 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRoute(std::shared_ptr<Vertex> sta
 
 int Graph::calculateHeuristic(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)
 {
-    // use absolute for when negative numbers occur
-    return abs(start->getXpos() - end->getXpos()) + abs(start->getYpos() - end->getYpos());
+    // euclidian heuristic
+    int xd = start->getXpos() - end->getXpos();
+    int yd = start->getYpos() - end->getYpos();
+    //return static_cast<int>(sqrt(xd*xd+yd*yd));
+    
+    // Manhattan
+    return (abs(xd) + abs(yd));
+    
+    // Chebyshev
+    //return Utils::max(abs(xd), abs(yd));
 }
 
 std::vector<std::shared_ptr<Vertex>> Graph::createPath(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)
@@ -149,12 +155,13 @@ std::vector<std::shared_ptr<Vertex>> Graph::createPath(std::shared_ptr<Vertex> s
     reconstruction.push_back(end);
     while (current != start)
     {
-        current = cameFrom[current];
+        current = (*cameFrom)[current];
         
         // don't push the start, not needed
         if (current != start)
             reconstruction.push_back(current);
     }
+    delete cameFrom;
     
     // reverse vector because we pushed from end to start
     std::reverse(reconstruction.begin(),reconstruction.end());

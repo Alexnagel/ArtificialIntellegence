@@ -22,3 +22,8 @@ void ChickenWandering::checkState()
 {
     
 }
+
+std::vector<std::shared_ptr<Vertex>> ChickenWandering::getRoute()
+{
+    return route;
+}

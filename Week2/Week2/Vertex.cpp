@@ -9,19 +9,33 @@
 #include "Vertex.h"
 #include "Edge.h"
 
-Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool hasPill) :xpos(p_xpos), ypos(p_ypos), wall(isWall)
+Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool p_hasPill) :xpos(p_xpos), ypos(p_ypos), wall(isWall)
 {
-    if (hasPill)
+    if (p_hasPill)
         pill = Pill();
+    
+    is_destination = false;
 }
+
 
 Vertex::Vertex(int p_xpos, int p_ypos, bool isWall) :xpos(p_xpos), ypos(p_ypos), wall(isWall)
 {
+    is_destination = false;
 }
 
-Vertex::Vertex(const Vertex& vertex) :xpos(vertex.xpos), ypos(vertex.ypos), wall(vertex.wall), has_pill(vertex.has_pill)
+Vertex::Vertex(const Vertex& vertex) :xpos(vertex.xpos), ypos(vertex.ypos), wall(vertex.wall), has_pill(vertex.has_pill), is_destination(vertex.is_destination)
 {
     
+}
+
+bool Vertex::isDestination()
+{
+    return is_destination;
+}
+
+void Vertex::setDestination(bool destination)
+{
+    is_destination = destination;
 }
 
 void Vertex::addEdge(std::shared_ptr<Vertex> to, int weight)

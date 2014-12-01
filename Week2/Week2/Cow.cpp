@@ -63,6 +63,11 @@ void Cow::changeState(StateEnum changeToState)
     }
 }
 
+std::vector<std::shared_ptr<Vertex>> Cow::getRoute()
+{
+    return state->getRoute();
+}
+
 Cow::~Cow()
 {
     

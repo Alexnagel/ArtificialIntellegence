@@ -21,10 +21,11 @@ CowWandering::CowWandering(std::shared_ptr<Unit> p_owner, std::shared_ptr<Graph>
 
 void CowWandering::move()
 {
-    if (currentIndex >= route.size() - 1)
+    if (currentIndex >= route.size())
     {
         hasRoute = false;
         currentIndex = 0;
+        owner->getPosition()->setDestination(false);
     }
     
     if (!hasRoute)
@@ -41,6 +42,11 @@ void CowWandering::move()
 void CowWandering::checkState()
 {
     //if (owner->getPosition()->hasPill())
-    if (steps == 25)
+    if (steps == 100)
         owner->changeState(StateEnum::CowChasing);
+}
+
+std::vector<std::shared_ptr<Vertex>> CowWandering::getRoute()
+{
+    return route;
 }

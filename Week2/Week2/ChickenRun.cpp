@@ -22,3 +22,8 @@ void ChickenRun::checkState()
 {
     
 }
+
+std::vector<std::shared_ptr<Vertex>> ChickenRun::getRoute()
+{
+    return route;
+}

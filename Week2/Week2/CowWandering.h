@@ -18,13 +18,14 @@ public:
     
     void move();
     void checkState();
+    
+    std::vector<std::shared_ptr<Vertex>> getRoute();
 private:
     std::shared_ptr<Graph> graph;
     int steps;
     
     bool hasRoute;
     int currentIndex;
-    std::vector<std::shared_ptr<Vertex>> route;
 };
 
 #endif /* defined(__Week2__CowWandering__) */

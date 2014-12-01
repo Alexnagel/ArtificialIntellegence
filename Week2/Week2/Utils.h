@@ -19,6 +19,7 @@ public:
     
     static int randomNumber(int max);
     static int randomNumber(int min, int max);
+    static int max(int x, int y);
     
 private:
     static int seed;

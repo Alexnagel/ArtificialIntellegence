@@ -19,6 +19,7 @@ class Edge;
 class Vertex : public std::enable_shared_from_this<Vertex>{
 public:
     Vertex(int xpos, int ypos, bool isWall, bool hasPill);
+    Vertex(int _id, int xpos, int ypos, bool isWall, bool hasPill);
     Vertex(int xpos, int ypos, bool isWall);
     Vertex(const Vertex& vertex);
     
@@ -31,6 +32,8 @@ public:
     bool isWall();
     bool hasPill();
     void eatPill();
+    bool isDestination();
+    void setDestination(bool destination);
 private:
     std::vector<std::shared_ptr<Edge>> edges;
     
@@ -39,6 +42,7 @@ private:
     bool wall;
     Pill pill;
     bool has_pill;
+    bool is_destination;
 };
 
 

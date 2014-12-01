@@ -26,6 +26,12 @@ int Utils::randomNumber(int min, int max)
     return std::uniform_int_distribution<int>(min, max)(rng);
 }
 
+int Utils::max(int x, int y)
+{
+    return x - ((x - y) & ((x - y) >>
+                           (sizeof(int) * CHAR_BIT - 1)));
+}
+
 Utils::~Utils()
 {
     
