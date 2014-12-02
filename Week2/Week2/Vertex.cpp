@@ -8,8 +8,10 @@
 
 #include "Vertex.h"
 #include "Edge.h"
+#include "Cow.h"
+#include "Chicken.h"
 
-Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool p_hasPill) :xpos(p_xpos), ypos(p_ypos), wall(isWall), has_pill(p_hasPill)
+Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool p_hasPill, bool p_hasWeapon) :xpos(p_xpos), ypos(p_ypos), wall(isWall), has_pill(p_hasPill), has_weapon(p_hasWeapon)
 {
     if (p_hasPill)
         pill = Pill();
@@ -21,9 +23,11 @@ Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool p_hasPill) :xpos(p_xpos
 Vertex::Vertex(int p_xpos, int p_ypos, bool isWall) :xpos(p_xpos), ypos(p_ypos), wall(isWall)
 {
     is_destination = false;
+    has_pill = false;
+    has_weapon = false;
 }
 
-Vertex::Vertex(const Vertex& vertex) :xpos(vertex.xpos), ypos(vertex.ypos), wall(vertex.wall), has_pill(vertex.has_pill), is_destination(vertex.is_destination)
+Vertex::Vertex(const Vertex& vertex) :xpos(vertex.xpos), ypos(vertex.ypos), wall(vertex.wall), has_pill(vertex.has_pill), is_destination(vertex.is_destination), has_weapon(vertex.has_weapon), cow(vertex.cow), chicken(vertex.chicken)
 {
     
 }
@@ -76,24 +80,44 @@ void Vertex::eatPill()
     has_pill = false;
 }
 
+bool Vertex::hasWeapon()
+{
+    return has_weapon;
+}
+
+void Vertex::takeWeapon()
+{
+    has_weapon = false;
+}
+
 bool Vertex::hasCow()
 {
-    return has_cow;
+    return !cow.expired();
 }
 
 bool Vertex::hasChicken()
 {
-    return has_chicken;
+    return !chicken.expired();
 }
 
-void Vertex::setHasCow(bool hasCow)
+void Vertex::setCow(std::shared_ptr<Cow> p_cow)
 {
-    has_cow = hasCow;
+    cow = p_cow;
 }
 
-void Vertex::setHasChicken(bool hasChicken)
+void Vertex::setChicken(std::shared_ptr<Chicken> p_chicken)
 {
-    has_chicken = hasChicken;
+    chicken = p_chicken;
+}
+
+std::shared_ptr<Cow> Vertex::getCow()
+{
+    return cow.lock();
+}
+
+std::shared_ptr<Chicken> Vertex::getChicken()
+{
+    return chicken.lock();
 }
 
 std::vector<std::shared_ptr<Edge>> Vertex::getEdges()

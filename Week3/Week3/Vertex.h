@@ -15,11 +15,12 @@
 #include "Pill.h"
 
 class Edge;
+class Cow;
+class Chicken;
 
 class Vertex : public std::enable_shared_from_this<Vertex>{
 public:
-    Vertex(int xpos, int ypos, bool isWall, bool hasPill);
-    Vertex(int _id, int xpos, int ypos, bool isWall, bool hasPill);
+    Vertex(int xpos, int ypos, bool isWall, bool hasPill, bool p_hasWeapon);
     Vertex(int xpos, int ypos, bool isWall);
     Vertex(const Vertex& vertex);
     
@@ -33,11 +34,16 @@ public:
     bool isWall();
     bool hasPill();
     void eatPill();
+    bool hasWeapon();
+    void takeWeapon();
     
     bool hasCow();
     bool hasChicken();
-    void setHasCow(bool hasCow);
-    void setHasChicken(bool hasChicken);
+    void setCow(std::shared_ptr<Cow> cow);
+    void setChicken(std::shared_ptr<Chicken> chicken);
+    std::shared_ptr<Cow> getCow();
+    std::shared_ptr<Chicken> getChicken();
+    
     
     bool isDestination();
     void setDestination(bool destination);
@@ -51,8 +57,10 @@ private:
     Pill pill;
     bool has_pill;
     
-    bool has_cow;
-    bool has_chicken;
+    bool has_weapon;
+    
+    std::weak_ptr<Cow> cow;
+    std::weak_ptr<Chicken> chicken;
     
     bool is_destination;
 };

@@ -32,6 +32,8 @@
 		FA5F409C1A2BBB3100698DF0 /* ChickenRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F409A1A2BBB3100698DF0 /* ChickenRun.cpp */; };
 		FA5F409F1A2BBB7600698DF0 /* BaseState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F409D1A2BBB7600698DF0 /* BaseState.cpp */; };
 		FA5F40A21A2BC0CF00698DF0 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5F40A01A2BC0CF00698DF0 /* Unit.cpp */; };
+		FAA16FCF1A2E21AE000BA720 /* ChickenJump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA16FCD1A2E21AE000BA720 /* ChickenJump.cpp */; };
+		FAA16FD21A2E2EEF000BA720 /* CowJump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA16FD01A2E2EEF000BA720 /* CowJump.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -105,6 +107,10 @@
 		FA5F40A01A2BC0CF00698DF0 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		FA5F40A11A2BC0CF00698DF0 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
 		FA5F40A31A2BC7EC00698DF0 /* StateEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateEnum.h; sourceTree = "<group>"; };
+		FAA16FCD1A2E21AE000BA720 /* ChickenJump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChickenJump.cpp; sourceTree = "<group>"; };
+		FAA16FCE1A2E21AE000BA720 /* ChickenJump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChickenJump.h; sourceTree = "<group>"; };
+		FAA16FD01A2E2EEF000BA720 /* CowJump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CowJump.cpp; sourceTree = "<group>"; };
+		FAA16FD11A2E2EEF000BA720 /* CowJump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CowJump.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,19 +224,39 @@
 		FA5F40901A2BBB0100698DF0 /* States */ = {
 			isa = PBXGroup;
 			children = (
+				FA5F40A31A2BC7EC00698DF0 /* StateEnum.h */,
 				FA5F409D1A2BBB7600698DF0 /* BaseState.cpp */,
 				FA5F409E1A2BBB7600698DF0 /* BaseState.h */,
+				FAA16FD31A2E38D5000BA720 /* Cow */,
+				FAA16FD41A2E38DC000BA720 /* Chicken */,
+			);
+			name = States;
+			sourceTree = "<group>";
+		};
+		FAA16FD31A2E38D5000BA720 /* Cow */ = {
+			isa = PBXGroup;
+			children = (
 				FA5F40911A2BBB1600698DF0 /* CowWandering.cpp */,
 				FA5F40921A2BBB1600698DF0 /* CowWandering.h */,
 				FA5F40941A2BBB1E00698DF0 /* CowChase.cpp */,
 				FA5F40951A2BBB1E00698DF0 /* CowChase.h */,
+				FAA16FD01A2E2EEF000BA720 /* CowJump.cpp */,
+				FAA16FD11A2E2EEF000BA720 /* CowJump.h */,
+			);
+			name = Cow;
+			sourceTree = "<group>";
+		};
+		FAA16FD41A2E38DC000BA720 /* Chicken */ = {
+			isa = PBXGroup;
+			children = (
 				FA5F40971A2BBB2700698DF0 /* ChickenWandering.cpp */,
 				FA5F40981A2BBB2700698DF0 /* ChickenWandering.h */,
 				FA5F409A1A2BBB3100698DF0 /* ChickenRun.cpp */,
 				FA5F409B1A2BBB3100698DF0 /* ChickenRun.h */,
-				FA5F40A31A2BC7EC00698DF0 /* StateEnum.h */,
+				FAA16FCD1A2E21AE000BA720 /* ChickenJump.cpp */,
+				FAA16FCE1A2E21AE000BA720 /* ChickenJump.h */,
 			);
-			name = States;
+			name = Chicken;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,8 +317,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA5F40851A2B98BF00698DF0 /* MainWindow.h in Sources */,
+				FAA16FD21A2E2EEF000BA720 /* CowJump.cpp in Sources */,
 				FA5F40861A2B98BF00698DF0 /* MainController.h in Sources */,
 				FA5F40931A2BBB1600698DF0 /* CowWandering.cpp in Sources */,
+				FAA16FCF1A2E21AE000BA720 /* ChickenJump.cpp in Sources */,
 				FA5F406B1A2B91BA00698DF0 /* Cow.cpp in Sources */,
 				FA5F408C1A2BA78F00698DF0 /* Wall.cpp in Sources */,
 				FA5F404F1A2B918800698DF0 /* main.cpp in Sources */,

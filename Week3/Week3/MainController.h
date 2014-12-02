@@ -38,6 +38,8 @@ private:
     static const int BOX_AMOUNT = 5;
     static const int TILE_SIZE = 40;
     
+    std::unique_ptr<std::thread> gameLoop;
+    
     int width;
     int height;
     int xGrid;

@@ -28,17 +28,18 @@ MainController::MainController()
     
     // Set the graph and the units
     mainWindow->setGraph(graph);
-    mainWindow->setUnits(cow, chicken);
+    mainWindow->setUnits(std::shared_ptr<Cow>(cow), std::shared_ptr<Chicken>(chicken));
     
     mainWindow->resize(width, height);
     mainWindow->show();
     
-    run();
+    gameLoop = std::unique_ptr<std::thread>(new std::thread(&MainController::run, this));
 }
 
 void MainController::quit()
 {
     isRunning = false;
+    gameLoop->detach();
 }
 
 void MainController::run()
@@ -84,14 +85,19 @@ void MainController::initGraph()
         {
             bool isWall = false;
             bool hasPill = false;
+            bool hasWeapon = false;
             
             int randomWall = Utils::randomNumber(100);
             if (randomWall < 20)
                 isWall = true;
             
             int randomPill = Utils::randomNumber(100);
-            if (randomPill < 35 && !isWall)
+            if (randomPill < 30 && !isWall)
                 hasPill = true;
+            
+            int randomWeapon = Utils::randomNumber(100);
+            if (randomWeapon < 30 && !isWall && !hasPill)
+                hasWeapon = true;
             
             int tempY = baseY;
             for (int j = 0; j < BOX_AMOUNT; j++)
@@ -109,10 +115,10 @@ void MainController::initGraph()
                     // Create the vertex and push to vector
                     std::shared_ptr<Vertex> vertex;
                     
-                    if (j == std::floor((BOX_SIZE - 1) / 2) && i == std::floor((BOX_SIZE - 1) / 2) && hasPill)
-                        vertex = graph->addVertex(tempX, tempY, isWall, hasPill);
+                    if (j == std::floor((BOX_SIZE - 1) / 2) && i == std::floor((BOX_SIZE - 1) / 2) && (hasPill || hasWeapon))
+                        vertex = graph->addVertex(tempX, tempY, isWall, hasPill, hasWeapon);
                     else
-                        vertex = graph->addVertex(tempX, tempY, isWall, false);
+                        vertex = graph->addVertex(tempX, tempY, isWall);
                     
                     vertices->at(arrayY).push_back(vertex);
                     
@@ -180,8 +186,8 @@ void MainController::initUnits()
     // Get the vertices to init Cow and Chicken
     verticeVector vertices = graph->getVertices();
     
-    chicken = std::shared_ptr<Chicken>(new Chicken(graph));
-    cow = std::shared_ptr<Cow>(new Cow(graph));
+    chicken = std::make_shared<Chicken>(graph);
+    cow = std::make_shared<Cow>(graph);
     
     // variables for getting the units
     int cowx, cowy, chickx, chicky;
@@ -200,7 +206,7 @@ void MainController::initUnits()
     chicken->move(chickenVertex);
     
     // Set the chicken in the graph
-    graph->setUnits(chicken);
+    graph->setUnits(std::shared_ptr<Chicken>(chicken));
     
     // Set the cow location
     do {
@@ -216,6 +222,11 @@ void MainController::update()
 {
     // Move the cow
     cow->move();
+    
+    if (cow->getState() == StateEnum::CowChasing && chicken->getState() == StateEnum::ChickenWander)
+    {
+        chicken->changeState(StateEnum::ChickenRunning);
+    }
     
     // Move the chicken
     chicken->move();

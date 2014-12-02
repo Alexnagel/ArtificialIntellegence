@@ -12,24 +12,17 @@
 CowChase::CowChase(std::shared_ptr<Unit> p_owner)
 {
     owner = p_owner;
-    currentIndex = -1;
 }
 
 void CowChase::move()
 {
-    if (!routedefined || currentIndex >= route.size())
-    {
-        route = owner->getRouteToChicken();
-        routedefined = true;
-        currentIndex = -1;
-    }
-    currentIndex++;
-    owner->move(route[currentIndex]);
+    route = owner->getRouteToChicken();
+    owner->move(route[0]);
 }
 
 void CowChase::checkState()
 {
-    if (currentIndex == route.size() - 1)
+    if (owner->getPosition()->hasChicken())
         owner->changeState(StateEnum::CowWander);
 }
 

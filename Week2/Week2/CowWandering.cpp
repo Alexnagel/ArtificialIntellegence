@@ -12,7 +12,6 @@
 CowWandering::CowWandering(std::shared_ptr<Unit> p_owner)
 {
     owner = p_owner;
-    steps = 0;
     hasRoute = false;
     currentIndex = 0;
 }
@@ -33,7 +32,6 @@ void CowWandering::move()
     
     owner->move(route[currentIndex]);
     currentIndex++;
-    steps++;
 }
 
 void CowWandering::checkState()

@@ -14,16 +14,17 @@
 #include "Unit.h"
 #include "ChickenWandering.h"
 #include "ChickenRun.h"
+#include "ChickenJump.h"
 
-class Chicken : public Unit, public std::enable_shared_from_this<Unit>{
+class Chicken : public Unit, public std::enable_shared_from_this<Chicken>{
 public:
     Chicken(std::shared_ptr<Graph> graph);
-    virtual ~Chicken();
+    Chicken(const Chicken &);
     
     void move(std::shared_ptr<Vertex> vertex);
     void move();
     std::shared_ptr<Vertex> getPosition();
-    QString getImageURI();
+    std::string getImageURI();
     
     void changeState(StateEnum state);
     StateEnum getState();
@@ -31,6 +32,9 @@ public:
     std::vector<std::shared_ptr<Vertex>> getRouteRandom();
     std::vector<std::shared_ptr<Vertex>> getRouteToChicken();
     std::shared_ptr<Vertex> getRandomVertex();
+    
+    void setWeapon(bool isWeapon);
+    bool hasWeapon();
 };
 
 #endif /* defined(__Week1__Chicken__) */

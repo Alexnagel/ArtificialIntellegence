@@ -32,6 +32,8 @@
 		FAA16FC21A2E0EF9000BA720 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA16FBF1A2E0EF9000BA720 /* QtCore.framework */; };
 		FAA16FC31A2E0EF9000BA720 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA16FC01A2E0EF9000BA720 /* QtGui.framework */; };
 		FAA16FC41A2E0EF9000BA720 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA16FC11A2E0EF9000BA720 /* QtWidgets.framework */; };
+		FAA1701C1A2E6F54000BA720 /* ChickenJump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA170181A2E6F54000BA720 /* ChickenJump.cpp */; };
+		FAA1701D1A2E6F54000BA720 /* CowJump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA1701A1A2E6F54000BA720 /* CowJump.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -105,6 +107,10 @@
 		FAA16FBF1A2E0EF9000BA720 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = ../../../Qt/5.3/clang_64/lib/QtCore.framework; sourceTree = "<group>"; };
 		FAA16FC01A2E0EF9000BA720 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = ../../../Qt/5.3/clang_64/lib/QtGui.framework; sourceTree = "<group>"; };
 		FAA16FC11A2E0EF9000BA720 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../../Qt/5.3/clang_64/lib/QtWidgets.framework; sourceTree = "<group>"; };
+		FAA170181A2E6F54000BA720 /* ChickenJump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChickenJump.cpp; sourceTree = "<group>"; };
+		FAA170191A2E6F54000BA720 /* ChickenJump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChickenJump.h; sourceTree = "<group>"; };
+		FAA1701A1A2E6F54000BA720 /* CowJump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CowJump.cpp; sourceTree = "<group>"; };
+		FAA1701B1A2E6F54000BA720 /* CowJump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CowJump.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,11 +149,11 @@
 		FAA16F781A2E0E6F000BA720 /* Week3 */ = {
 			isa = PBXGroup;
 			children = (
-				FAA16FC51A2E0F54000BA720 /* States */,
-				FAA16FC61A2E0F75000BA720 /* View */,
-				FAA16FC71A2E0F96000BA720 /* Graph */,
 				FAA16FC81A2E0FA6000BA720 /* Controller */,
+				FAA16FC61A2E0F75000BA720 /* View */,
 				FAA16FC91A2E0FAF000BA720 /* Model */,
+				FAA16FC51A2E0F54000BA720 /* States */,
+				FAA16FC71A2E0F96000BA720 /* Graph */,
 			);
 			path = Week3;
 			sourceTree = "<group>";
@@ -155,6 +161,10 @@
 		FAA16FC51A2E0F54000BA720 /* States */ = {
 			isa = PBXGroup;
 			children = (
+				FAA170181A2E6F54000BA720 /* ChickenJump.cpp */,
+				FAA170191A2E6F54000BA720 /* ChickenJump.h */,
+				FAA1701A1A2E6F54000BA720 /* CowJump.cpp */,
+				FAA1701B1A2E6F54000BA720 /* CowJump.h */,
 				FAA16F9E1A2E0E91000BA720 /* StateEnum.h */,
 				FAA16F801A2E0E91000BA720 /* BaseState.cpp */,
 				FAA16F811A2E0E91000BA720 /* BaseState.h */,
@@ -283,8 +293,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAA16FBA1A2E0EA9000BA720 /* MainController.h in Sources */,
+				FAA1701D1A2E6F54000BA720 /* CowJump.cpp in Sources */,
 				FAA16FBB1A2E0EA9000BA720 /* MainWindow.h in Sources */,
 				FAA16FB31A2E0E91000BA720 /* MainWindow.cpp in Sources */,
+				FAA1701C1A2E6F54000BA720 /* ChickenJump.cpp in Sources */,
 				FAA16FAE1A2E0E91000BA720 /* Edge.cpp in Sources */,
 				FAA16FA81A2E0E91000BA720 /* Chicken.cpp in Sources */,
 				FAA16FAD1A2E0E91000BA720 /* CowWandering.cpp in Sources */,
@@ -397,6 +409,10 @@
 					/Users/Alex/Qt/5.3/clang_64/lib/QtCore.framework/Headers,
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/Alex/Qt/5.3/clang_64/lib/**";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-pthread",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -416,6 +432,10 @@
 					/Users/Alex/Qt/5.3/clang_64/lib/QtCore.framework/Headers,
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/Alex/Qt/5.3/clang_64/lib/**";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-pthread",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

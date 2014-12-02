@@ -20,8 +20,6 @@ public:
     
     std::vector<std::shared_ptr<Vertex>> getRoute();
 private:
-    int steps;
-    
     bool hasRoute;
     int currentIndex;
 };

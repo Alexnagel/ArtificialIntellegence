@@ -27,7 +27,9 @@ public:
     Graph(MainWindow* main);
     Graph(const Graph& rvalue);
     
-    std::shared_ptr<Vertex> addVertex(int xpos, int ypos, bool isWall, bool hasPill);
+    std::shared_ptr<Vertex> addVertex(int xpos, int ypos, bool isWall, bool hasPill, bool hasWeapon);
+    std::shared_ptr<Vertex> addVertex(int xpos, int ypos, bool isWall);
+    
     void addEdge(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to);
     void addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to);
     void addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to, int weight);

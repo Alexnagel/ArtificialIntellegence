@@ -18,6 +18,10 @@ public:
     void move();
     void checkState();
     std::vector<std::shared_ptr<Vertex>> getRoute();
+    
+private:
+    bool hasRoute;
+    int currentIndex;
 };
 
 #endif /* defined(__Week2__ChickenWandering__) */

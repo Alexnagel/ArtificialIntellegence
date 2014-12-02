@@ -20,8 +20,6 @@ public:
     
     std::vector<std::shared_ptr<Vertex>> getRoute();
 private:
-    bool routedefined;
-    int currentIndex;
     std::vector<std::shared_ptr<Vertex>> route;
 };
 

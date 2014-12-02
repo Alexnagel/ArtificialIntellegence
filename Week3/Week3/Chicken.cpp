@@ -9,20 +9,28 @@
 #include "Chicken.h"
 #include "Graph.h"
 
-Chicken::Chicken(std::shared_ptr<Graph> p_graph)
+Chicken::Chicken(std::shared_ptr<Graph> p_graph): Unit()
 {
+    std::string appPath = QCoreApplication::applicationDirPath().toStdString();
+    Unit::imagePath =  appPath.append("/chicken.png");
     graph = p_graph;
+    has_weapon = false;
     
-    imageURI = QCoreApplication::applicationDirPath() + "/chicken.png";
+    // Set state to wander
     changeState(StateEnum::ChickenWander);
+}
+
+Chicken::Chicken(const Chicken & other) : Unit(other)
+{
+    
 }
 
 void Chicken::move(std::shared_ptr<Vertex> vertex)
 {
     if (!position.expired())
-        position.lock()->setHasChicken(false);
+        position.lock()->setChicken(std::shared_ptr<Chicken>());
     
-    vertex->setHasChicken(true);
+    vertex->setChicken(shared_from_this());
     position = vertex;
 }
 
@@ -37,9 +45,19 @@ std::shared_ptr<Vertex> Chicken::getPosition()
     return position.lock();
 }
 
-QString Chicken::getImageURI()
+std::string Chicken::getImageURI()
 {
-    return imageURI;
+    return Unit::imagePath;
+}
+
+bool Chicken::hasWeapon()
+{
+    return has_weapon;
+}
+
+void Chicken::setWeapon(bool isWeapon)
+{
+    has_weapon = isWeapon;
 }
 
 StateEnum Chicken::getState()
@@ -54,10 +72,14 @@ void Chicken::changeState(StateEnum changeStateTo)
             state = new ChickenRun(std::shared_ptr<Chicken>(this));
             currentState = StateEnum::ChickenRunning;
             break;
+        case StateEnum::ChickenJumping:
+            state = new ChickenJump(std::shared_ptr<Chicken>(this));
+            currentState = StateEnum::ChickenJumping;
+            break;
         case StateEnum::ChickenWander:
+        default:
             state = new ChickenWandering(std::shared_ptr<Chicken>(this));
             currentState = StateEnum::ChickenWander;
-        default:
             break;
     }
 }
@@ -75,9 +97,4 @@ std::vector<std::shared_ptr<Vertex>> Chicken::getRouteToChicken()
 std::shared_ptr<Vertex> Chicken::getRandomVertex()
 {
     return graph->getRandomVertex();
-}
-
-Chicken::~Chicken()
-{
-    
 }

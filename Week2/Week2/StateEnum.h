@@ -12,8 +12,10 @@
 enum StateEnum {
     CowWander,
     CowChasing,
+    CowJumping,
     ChickenWander,
-    ChickenRunning
+    ChickenRunning,
+    ChickenJumping
 };
 
 #endif

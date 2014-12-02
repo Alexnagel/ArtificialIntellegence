@@ -19,9 +19,15 @@ Graph::Graph(const Graph& rvalue): chicken(rvalue.chicken), vertices(rvalue.vert
     
 }
 
-std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, bool isWall, bool hasPill)
+std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, bool isWall, bool hasPill, bool hasWeapon)
 {
-    std::shared_ptr<Vertex> vertex = std::make_shared<Vertex>(xpos, ypos, isWall, hasPill);
+    std::shared_ptr<Vertex> vertex = std::make_shared<Vertex>(xpos, ypos, isWall, hasPill, hasWeapon);
+    return vertex;
+}
+
+std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, bool isWall)
+{
+    std::shared_ptr<Vertex> vertex = std::make_shared<Vertex>(xpos, ypos, isWall);
     return vertex;
 }
 

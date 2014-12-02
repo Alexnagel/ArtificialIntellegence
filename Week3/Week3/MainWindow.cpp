@@ -1,4 +1,4 @@
-//
+ //
 //  MainWindow.cpp
 //  Week1
 //
@@ -63,11 +63,11 @@ void MainWindow::drawMap()
                 painter.setBrush(Qt::darkBlue);
             if (vertex->isDestination())
                 painter.setBrush(Qt::red);
-            
             if (vertex->hasPill())
-            {
                 painter.setBrush(Qt::darkMagenta);
-            }
+            if (vertex->hasWeapon())
+                painter.setBrush(Qt::yellow);
+                
             painter.drawRect(vertex->getXpos(), vertex->getYpos(), 8, 8);
 
             painter.setBrush(Qt::darkGreen);
@@ -112,20 +112,14 @@ void MainWindow::drawUnits()
     
     std::shared_ptr<Cow> s_cow = cow.lock();
     std::shared_ptr<Chicken> s_chicken = chicken.lock();
-    QImage chicken_img(s_chicken->getImageURI());
-    QImage cow_img(s_cow->getImageURI());
+    QImage chicken_img(QString::fromStdString(s_chicken->getImageURI()));
+    QImage cow_img(QString::fromStdString(s_cow->getImageURI()));
     
     cow_img = cow_img.scaled(30, 30, Qt::KeepAspectRatio);
     chicken_img = chicken_img.scaled(30, 30, Qt::KeepAspectRatio);
     
-    if (s_chicken->getPosition()->getXpos() < 16)
-    {
-        painter.drawImage(s_chicken->getPosition()->getXpos() + 15,
-                          s_chicken->getPosition()->getYpos() - 15, chicken_img);
-    }
-    else
-        painter.drawImage(s_chicken->getPosition()->getXpos() + 15,
-                          s_chicken->getPosition()->getYpos() - 15, chicken_img);
+    painter.drawImage(s_chicken->getPosition()->getXpos() - 15,
+                      s_chicken->getPosition()->getYpos() - 15, chicken_img);
     
     painter.drawImage(s_cow->getPosition()->getXpos() - 15,
                       s_cow->getPosition()->getYpos() - 15, cow_img);
@@ -138,7 +132,7 @@ void MainWindow::drawUnits()
         {
             if (i < route.size() - 1)
                 painter.drawLine(route[i]->getXpos() + 4, route[i]->getYpos() + 4,
-                             route[i + 1]->getXpos() + 4, route[i + 1]->getYpos() + 4);
+                                 route[i + 1]->getXpos() + 4, route[i + 1]->getYpos() + 4);
         }
         painter.setPen(Qt::NoPen);
     }
@@ -162,15 +156,19 @@ void MainWindow::drawStateText()
     painter.drawText(20, this->height() - 20, stateTextCow);
     
     QString stateTextChicken;
-    switch (cow.lock()->getState()) {
-        case StateEnum::CowChasing:
+    switch (chicken.lock()->getState()) {
+        case StateEnum::ChickenRunning:
             stateTextChicken = "Chicken is fleeing";
             break;
-        case StateEnum::CowWander:
+        case StateEnum::ChickenWander:
         default:
             stateTextChicken = "Chicken is wandering";
             break;
     }
+    
+    if (chicken.lock()->hasWeapon())
+        stateTextChicken.append(". Has Weapon");
+    
     painter.drawText(this->width() - 400, this->height() - 20, stateTextChicken);
 }
 

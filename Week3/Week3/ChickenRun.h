@@ -18,8 +18,11 @@ public:
     void move();
     void checkState();
     std::vector<std::shared_ptr<Vertex>> getRoute();
+
 private:
-    std::shared_ptr<Vertex> moveTo;
+    bool hasRoute;
+    bool usedWeapon;
+    int currentIndex;
 };
 
 #endif /* defined(__Week2__ChickenRun__) */

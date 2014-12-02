@@ -8,3 +8,11 @@
 
 #include "Unit.h"
 #include "Graph.h"
+
+Unit::Unit()
+{
+}
+
+Unit::Unit(const Unit & other): position(other.position), imagePath(other.imagePath), state(other.state), currentState(other.currentState), graph(other.graph), has_weapon(other.has_weapon)
+{
+}

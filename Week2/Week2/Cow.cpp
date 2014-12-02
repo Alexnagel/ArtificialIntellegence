@@ -9,28 +9,35 @@
 #include "Cow.h"
 #include "Graph.h"
 
-Cow::Cow(std::shared_ptr<Graph> graph)
+Cow::Cow(std::shared_ptr<Graph> p_graph) : Unit()
 {
-    imageURI = QCoreApplication::applicationDirPath() + "/cow.png";
-    this->graph = graph;
+    std::string appPath = QCoreApplication::applicationDirPath().toStdString();
+    Unit::imagePath =  appPath.append("/cow.png");
+    graph = p_graph;
+    has_weapon = false;
     
     // set to wandering
     changeState(StateEnum::CowWander);
 }
 
+Cow::Cow(const Cow & other): Unit(other)
+{
+    
+}
+
 void Cow::move(std::shared_ptr<Vertex> vertex)
 {
     if (!position.expired())
-        position.lock()->setHasCow(false);
+        position.lock()->setCow(std::shared_ptr<Cow>());
     
-    vertex->setHasCow(true);
+    vertex->setCow(shared_from_this());
     position = vertex;
 }
 
 void Cow::move()
 {
-    state->checkState();
     state->move();
+    state->checkState();
 }
 
 std::shared_ptr<Vertex> Cow::getPosition()
@@ -38,9 +45,19 @@ std::shared_ptr<Vertex> Cow::getPosition()
     return position.lock();
 }
 
-QString Cow::getImageURI()
+std::string Cow::getImageURI()
 {
-    return imageURI;
+    return imagePath;
+}
+
+bool Cow::hasWeapon()
+{
+    return has_weapon;
+}
+
+void Cow::setWeapon(bool isWeapon)
+{
+    has_weapon = isWeapon;
 }
 
 StateEnum Cow::getState()
@@ -57,7 +74,10 @@ void Cow::changeState(StateEnum changeToState)
             break;
         case StateEnum::CowWander:
             state = new CowWandering(std::shared_ptr<Cow>(this));
-            currentState = StateEnum::CowWander;
+            currentState = StateEnum::CowWander;break;
+        case StateEnum::CowJumping:
+            state = new CowJump(std::shared_ptr<Cow>(this));
+            currentState = StateEnum::CowJumping; break;
         default:
             break;
     }
@@ -80,10 +100,5 @@ std::vector<std::shared_ptr<Vertex>> Cow::getRouteToChicken()
 
 std::shared_ptr<Vertex> Cow::getRandomVertex()
 {
-    return std::shared_ptr<Vertex>();
-}
-
-Cow::~Cow()
-{
-    
+    return graph->getRandomVertex();
 }
