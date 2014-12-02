@@ -27,13 +27,13 @@ std::shared_ptr<Vertex> Graph::addVertex(int xpos, int ypos, bool isWall, bool h
 
 void Graph::addEdge(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to)
 {
-    int weight = 50;
+    int weight = 5;
     from->addEdge(to, weight);
 }
 
 void Graph::addEdges(std::shared_ptr<Vertex> from, std::shared_ptr<Vertex> to)
 {
-    int weight = 50;
+    int weight = 5;
     from->addEdges(to, weight);
 }
 
@@ -72,7 +72,7 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRouteChicken(std::shared_ptr<Vert
     return getRoute(start, chicken->getPosition());
 }
 
-std::vector<std::shared_ptr<Vertex>> Graph::getRouteRandom(std::shared_ptr<Vertex> start)
+std::shared_ptr<Vertex> Graph::getRandomVertex()
 {
     std::shared_ptr<Vertex> end;
     do{
@@ -82,7 +82,12 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRouteRandom(std::shared_ptr<Verte
         end = std::shared_ptr<Vertex>(vertices->at(y).at(x));
     }
     while (end->isWall());
-    end->setDestination(true);
+    return end;
+}
+
+std::vector<std::shared_ptr<Vertex>> Graph::getRouteRandom(std::shared_ptr<Vertex> start)
+{
+    std::shared_ptr<Vertex> end = getRandomVertex();
     return getRoute(start, end);
 }
 
@@ -135,16 +140,16 @@ std::vector<std::shared_ptr<Vertex>> Graph::getRoute(std::shared_ptr<Vertex> sta
 
 int Graph::calculateHeuristic(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)
 {
-    // euclidian heuristic
-    int xd = start->getXpos() - end->getXpos();
-    int yd = start->getYpos() - end->getYpos();
-    //return static_cast<int>(sqrt(xd*xd+yd*yd));
+    // euclidean heuristic
+    int dx = start->getXpos() - end->getXpos();
+    int dy = start->getYpos() - end->getYpos();
+    //return static_cast<int>(sqrt(dx*dx+dy*dy));
     
     // Manhattan
-    return (abs(xd) + abs(yd));
+    return abs(dx) + abs(dy);
     
     // Chebyshev
-    //return Utils::max(abs(xd), abs(yd));
+    //return Utils::max(abs(dx), abs(dy));
 }
 
 std::vector<std::shared_ptr<Vertex>> Graph::createPath(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end)

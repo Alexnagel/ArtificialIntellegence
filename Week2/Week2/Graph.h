@@ -42,13 +42,13 @@ public:
     std::vector<std::shared_ptr<Vertex>> getRoute(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end);
     std::vector<std::shared_ptr<Vertex>> getRouteRandom(std::shared_ptr<Vertex> start);
     std::vector<std::shared_ptr<Vertex>> getRouteChicken(std::shared_ptr<Vertex> start);
+    std::shared_ptr<Vertex> getRandomVertex();
     
 private:
     static const bool DEBUG_PATH = false;
     
     std::shared_ptr<Chicken> chicken;
     std::shared_ptr<std::vector<std::vector<std::shared_ptr<Vertex>>>> vertices;
-    std::vector<std::shared_ptr<Vertex>> closedList;
     std::map<std::shared_ptr<Vertex>, std::shared_ptr<Vertex>>* cameFrom;
     
     std::vector<std::shared_ptr<Vertex>> createPath(std::shared_ptr<Vertex> start, std::shared_ptr<Vertex> end);

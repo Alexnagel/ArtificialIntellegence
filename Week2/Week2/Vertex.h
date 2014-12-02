@@ -29,9 +29,16 @@ public:
     
     int getXpos();
     int getYpos();
+    
     bool isWall();
     bool hasPill();
     void eatPill();
+    
+    bool hasCow();
+    bool hasChicken();
+    void setHasCow(bool hasCow);
+    void setHasChicken(bool hasChicken);
+    
     bool isDestination();
     void setDestination(bool destination);
 private:
@@ -40,8 +47,13 @@ private:
     int xpos;
     int ypos;
     bool wall;
+    
     Pill pill;
     bool has_pill;
+    
+    bool has_cow;
+    bool has_chicken;
+    
     bool is_destination;
 };
 

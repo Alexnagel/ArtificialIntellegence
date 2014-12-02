@@ -9,7 +9,7 @@
 #include "Vertex.h"
 #include "Edge.h"
 
-Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool p_hasPill) :xpos(p_xpos), ypos(p_ypos), wall(isWall)
+Vertex::Vertex(int p_xpos, int p_ypos, bool isWall, bool p_hasPill) :xpos(p_xpos), ypos(p_ypos), wall(isWall), has_pill(p_hasPill)
 {
     if (p_hasPill)
         pill = Pill();
@@ -74,6 +74,26 @@ void Vertex::eatPill()
 {
     pill.isEaten();
     has_pill = false;
+}
+
+bool Vertex::hasCow()
+{
+    return has_cow;
+}
+
+bool Vertex::hasChicken()
+{
+    return has_chicken;
+}
+
+void Vertex::setHasCow(bool hasCow)
+{
+    has_cow = hasCow;
+}
+
+void Vertex::setHasChicken(bool hasChicken)
+{
+    has_chicken = hasChicken;
 }
 
 std::vector<std::shared_ptr<Edge>> Vertex::getEdges()

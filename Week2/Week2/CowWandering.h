@@ -10,18 +10,16 @@
 #define __Week2__CowWandering__
 
 #include "BaseState.h"
-#include "Graph.h"
 
 class CowWandering : public BaseState{
 public:
-    CowWandering(std::shared_ptr<Unit> owner, std::shared_ptr<Graph> graph);
+    CowWandering(std::shared_ptr<Unit> owner);
     
     void move();
     void checkState();
     
     std::vector<std::shared_ptr<Vertex>> getRoute();
 private:
-    std::shared_ptr<Graph> graph;
     int steps;
     
     bool hasRoute;

@@ -10,18 +10,16 @@
 #define __Week2__CowChase__
 
 #include "BaseState.h"
-#include "Graph.h"
 
 class CowChase : public BaseState {
 public:
-    CowChase(std::shared_ptr<Unit> p_owner, std::shared_ptr<Graph> graph);
+    CowChase(std::shared_ptr<Unit> p_owner);
 
     void move();
     void checkState();
     
     std::vector<std::shared_ptr<Vertex>> getRoute();
 private:
-    std::shared_ptr<Graph> graph;
     bool routedefined;
     int currentIndex;
     std::vector<std::shared_ptr<Vertex>> route;

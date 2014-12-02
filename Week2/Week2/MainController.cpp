@@ -15,27 +15,24 @@ MainController::MainController()
     width = 880;
     height = 520;
     
-    // Init the graph
-    
-    
-    
-    
     // Init MainWindow and set the data
     mainWindow = new MainWindow();
     mainWindow->setController(this);
     
+    // Init the graph
     graph = std::make_shared<Graph>(mainWindow);
     initGraph();
+    
     // Init the units
     initUnits();
     
+    // Set the graph and the units
     mainWindow->setGraph(graph);
     mainWindow->setUnits(cow, chicken);
     
     mainWindow->resize(width, height);
     mainWindow->show();
     
-    repaint();
     run();
 }
 
@@ -93,7 +90,7 @@ void MainController::initGraph()
                 isWall = true;
             
             int randomPill = Utils::randomNumber(100);
-            if (randomPill < 40 && !isWall)
+            if (randomPill < 35 && !isWall)
                 hasPill = true;
             
             int tempY = baseY;
@@ -112,7 +109,7 @@ void MainController::initGraph()
                     // Create the vertex and push to vector
                     std::shared_ptr<Vertex> vertex;
                     
-                    if (j == std::floor(BOX_SIZE - 1 / 2) && i == std::floor(BOX_SIZE - 1 / 2) && hasPill)
+                    if (j == std::floor((BOX_SIZE - 1) / 2) && i == std::floor((BOX_SIZE - 1) / 2) && hasPill)
                         vertex = graph->addVertex(tempX, tempY, isWall, hasPill);
                     else
                         vertex = graph->addVertex(tempX, tempY, isWall, false);
@@ -183,7 +180,7 @@ void MainController::initUnits()
     // Get the vertices to init Cow and Chicken
     verticeVector vertices = graph->getVertices();
     
-    chicken = std::shared_ptr<Chicken>(new Chicken());
+    chicken = std::shared_ptr<Chicken>(new Chicken(graph));
     cow = std::shared_ptr<Cow>(new Cow(graph));
     
     // variables for getting the units
@@ -219,6 +216,9 @@ void MainController::update()
 {
     // Move the cow
     cow->move();
+    
+    // Move the chicken
+    chicken->move();
     
     // Repaint the main window
     repaint();

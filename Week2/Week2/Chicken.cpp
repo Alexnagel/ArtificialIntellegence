@@ -7,20 +7,28 @@
 //
 
 #include "Chicken.h"
+#include "Graph.h"
 
-Chicken::Chicken()
+Chicken::Chicken(std::shared_ptr<Graph> p_graph)
 {
+    graph = p_graph;
+    
     imageURI = QCoreApplication::applicationDirPath() + "/chicken.png";
     changeState(StateEnum::ChickenWander);
 }
 
 void Chicken::move(std::shared_ptr<Vertex> vertex)
 {
+    if (!position.expired())
+        position.lock()->setHasChicken(false);
+    
+    vertex->setHasChicken(true);
     position = vertex;
 }
 
 void Chicken::move()
 {
+    state->checkState();
     state->move();
 }
 
@@ -52,6 +60,21 @@ void Chicken::changeState(StateEnum changeStateTo)
         default:
             break;
     }
+}
+
+std::vector<std::shared_ptr<Vertex>> Chicken::getRouteRandom()
+{
+    return graph->getRouteRandom(getPosition());
+}
+
+std::vector<std::shared_ptr<Vertex>> Chicken::getRouteToChicken()
+{
+    return graph->getRouteChicken(getPosition());
+}
+
+std::shared_ptr<Vertex> Chicken::getRandomVertex()
+{
+    return graph->getRandomVertex();
 }
 
 Chicken::~Chicken()

@@ -44,7 +44,8 @@ protected:
     void paintEvent(QPaintEvent* event);
     
 private:
-    static const bool DRAW_COW_PATH = true;
+    static const bool DRAW_COW_PATH = false;
+    static const bool DRAW_EDGES = false;
     
     MainController* controller;
     std::shared_ptr<Graph> graph;

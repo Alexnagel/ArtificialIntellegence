@@ -7,6 +7,7 @@
 //
 
 #include "ChickenWandering.h"
+#include "Unit.h"
 
 ChickenWandering::ChickenWandering(std::shared_ptr<Unit> p_owner)
 {
@@ -20,7 +21,8 @@ void ChickenWandering::move()
 
 void ChickenWandering::checkState()
 {
-    
+    if (owner->getPosition()->hasCow())
+        owner->changeState(StateEnum::ChickenRunning);
 }
 
 std::vector<std::shared_ptr<Vertex>> ChickenWandering::getRoute()

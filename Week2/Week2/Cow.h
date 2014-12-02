@@ -14,12 +14,10 @@
 #include "Unit.h"
 #include "CowChase.h"
 #include "CowWandering.h"
-#include "Graph.h"
 
 class Cow : public Unit, public std::enable_shared_from_this<Unit>{
 public:
     Cow(std::shared_ptr<Graph> graph);
-    Cow(const Cow& rvalue);
     virtual ~Cow();
     
     void move(std::shared_ptr<Vertex> vertex);
@@ -30,10 +28,12 @@ public:
     void changeState(StateEnum changeToState);
     StateEnum getState();
     
+    std::vector<std::shared_ptr<Vertex>> getRouteRandom();
+    std::vector<std::shared_ptr<Vertex>> getRouteToChicken();
+    std::shared_ptr<Vertex> getRandomVertex();
+    
     // DEBUG
     std::vector<std::shared_ptr<Vertex>> getRoute();
-private:
-    std::shared_ptr<Graph> graph;
 };
 
 #endif /* defined(__Week1__Cow__) */

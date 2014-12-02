@@ -17,7 +17,7 @@
 
 class Chicken : public Unit, public std::enable_shared_from_this<Unit>{
 public:
-    Chicken();
+    Chicken(std::shared_ptr<Graph> graph);
     virtual ~Chicken();
     
     void move(std::shared_ptr<Vertex> vertex);
@@ -27,6 +27,10 @@ public:
     
     void changeState(StateEnum state);
     StateEnum getState();
+    
+    std::vector<std::shared_ptr<Vertex>> getRouteRandom();
+    std::vector<std::shared_ptr<Vertex>> getRouteToChicken();
+    std::shared_ptr<Vertex> getRandomVertex();
 };
 
 #endif /* defined(__Week1__Chicken__) */

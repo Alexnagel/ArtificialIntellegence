@@ -64,22 +64,24 @@ void MainWindow::drawMap()
             if (vertex->isDestination())
                 painter.setBrush(Qt::red);
             
-            painter.drawRect(vertex->getXpos(), vertex->getYpos(), 8, 8);
-            
-            /*if (vertex->hasPill())
+            if (vertex->hasPill())
             {
                 painter.setBrush(Qt::darkMagenta);
-                painter.drawEllipse(vertex->getXpos() - 4, vertex->getYpos(), 12, 8);
-            }*/
+            }
+            painter.drawRect(vertex->getXpos(), vertex->getYpos(), 8, 8);
 
             painter.setBrush(Qt::darkGreen);
             
-            /*for (std::shared_ptr<Edge> edge : vertex->getEdges())
+            if (DRAW_EDGES)
             {
-                painter.setPen(QPen(Qt::red, 2, Qt::SolidLine));
-                painter.drawLine(edge->getOrigin()->getXpos() + 4, edge->getOrigin()->getYpos() + 4,
-                                 edge->getDestination()->getXpos() + 4, edge->getDestination()->getYpos() + 4);
-            }*/
+                for (std::shared_ptr<Edge> edge : vertex->getEdges())
+                {
+                    painter.setPen(QPen(Qt::red, 2, Qt::SolidLine));
+                    painter.drawLine(edge->getOrigin()->getXpos() + 4, edge->getOrigin()->getYpos() + 4,
+                                     edge->getDestination()->getXpos() + 4, edge->getDestination()->getYpos() + 4);
+                }
+            }
+            
             painter.setPen(Qt::NoPen);
         }
     }
@@ -116,10 +118,17 @@ void MainWindow::drawUnits()
     cow_img = cow_img.scaled(30, 30, Qt::KeepAspectRatio);
     chicken_img = chicken_img.scaled(30, 30, Qt::KeepAspectRatio);
     
+    if (s_chicken->getPosition()->getXpos() < 16)
+    {
+        painter.drawImage(s_chicken->getPosition()->getXpos() + 15,
+                          s_chicken->getPosition()->getYpos() - 15, chicken_img);
+    }
+    else
+        painter.drawImage(s_chicken->getPosition()->getXpos() + 15,
+                          s_chicken->getPosition()->getYpos() - 15, chicken_img);
+    
     painter.drawImage(s_cow->getPosition()->getXpos() - 15,
                       s_cow->getPosition()->getYpos() - 15, cow_img);
-    painter.drawImage(s_chicken->getPosition()->getXpos() - 15,
-                      s_chicken->getPosition()->getYpos() - 15, chicken_img);
     
     if (DRAW_COW_PATH)
     {
@@ -138,21 +147,31 @@ void MainWindow::drawUnits()
 void MainWindow::drawStateText()
 {
     QPainter painter(this);
-    painter.setPen(Qt::white);
+    painter.setPen(Qt::black);
     
-    QString stateText;
+    QString stateTextCow;
     switch (cow.lock()->getState()) {
         case StateEnum::CowChasing:
-            stateText = "Cow is chasing the chicken";
+            stateTextCow = "Cow is chasing the chicken";
             break;
         case StateEnum::CowWander:
-            stateText = "Cow is wandering in the field";
-            break;
         default:
-            stateText = "No idea";
+            stateTextCow = "Cow is wandering in the field";
             break;
     }
-    painter.drawText(20, this->height() - 20, stateText);
+    painter.drawText(20, this->height() - 20, stateTextCow);
+    
+    QString stateTextChicken;
+    switch (cow.lock()->getState()) {
+        case StateEnum::CowChasing:
+            stateTextChicken = "Chicken is fleeing";
+            break;
+        case StateEnum::CowWander:
+        default:
+            stateTextChicken = "Chicken is wandering";
+            break;
+    }
+    painter.drawText(this->width() - 400, this->height() - 20, stateTextChicken);
 }
 
 

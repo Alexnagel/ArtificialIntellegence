@@ -393,6 +393,7 @@
 		FA5F40531A2B918800698DF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				FRAMEWORK_SEARCH_PATHS = /Users/Alex/Qt/5.3/clang_64/lib;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -402,6 +403,7 @@
 					/Users/Alex/Qt/5.3/clang_64/lib/QtCore.framework/Headers,
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/Alex/Qt/5.3/clang_64/lib/**";
+				OTHER_LDFLAGS = "-lpthread";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -409,6 +411,7 @@
 		FA5F40541A2B918800698DF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				FRAMEWORK_SEARCH_PATHS = /Users/Alex/Qt/5.3/clang_64/lib;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -418,6 +421,7 @@
 					/Users/Alex/Qt/5.3/clang_64/lib/QtCore.framework/Headers,
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/Alex/Qt/5.3/clang_64/lib/**";
+				OTHER_LDFLAGS = "-lpthread";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -441,6 +445,7 @@
 				FA5F40541A2B918800698DF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

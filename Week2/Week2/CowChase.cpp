@@ -9,23 +9,22 @@
 #include "CowChase.h"
 #include "Unit.h"
 
-CowChase::CowChase(std::shared_ptr<Unit> p_owner, std::shared_ptr<Graph> graph)
+CowChase::CowChase(std::shared_ptr<Unit> p_owner)
 {
     owner = p_owner;
-    this->graph = graph;
-    currentIndex = 0;
+    currentIndex = -1;
 }
 
 void CowChase::move()
 {
     if (!routedefined || currentIndex >= route.size())
     {
-        route = graph->getRouteChicken(owner->getPosition());
+        route = owner->getRouteToChicken();
         routedefined = true;
-        currentIndex = 0;
+        currentIndex = -1;
     }
-    owner->move(route[currentIndex]);
     currentIndex++;
+    owner->move(route[currentIndex]);
 }
 
 void CowChase::checkState()

@@ -8,14 +8,12 @@
 
 #include "CowWandering.h"
 #include "Unit.h"
-#include "Edge.h"
 
-CowWandering::CowWandering(std::shared_ptr<Unit> p_owner, std::shared_ptr<Graph> p_graph)
+CowWandering::CowWandering(std::shared_ptr<Unit> p_owner)
 {
     owner = p_owner;
     steps = 0;
     hasRoute = false;
-    this->graph = p_graph;
     currentIndex = 0;
 }
 
@@ -25,12 +23,11 @@ void CowWandering::move()
     {
         hasRoute = false;
         currentIndex = 0;
-        owner->getPosition()->setDestination(false);
     }
     
     if (!hasRoute)
     {
-        route = graph->getRouteRandom(owner->getPosition());
+        route = owner->getRouteRandom();
         hasRoute = true;
     }
     
@@ -41,9 +38,11 @@ void CowWandering::move()
 
 void CowWandering::checkState()
 {
-    //if (owner->getPosition()->hasPill())
-    if (steps == 100)
+    if (owner->getPosition()->hasPill())
+    {
+        owner->getPosition()->eatPill();
         owner->changeState(StateEnum::CowChasing);
+    }
 }
 
 std::vector<std::shared_ptr<Vertex>> CowWandering::getRoute()
